@@ -1,0 +1,35 @@
+update
+
+tap phinze/homebrew-cask
+install brew-cask
+
+# Tools
+install zsh
+install tmux
+install tree
+install wget
+install gnu-sed
+install the_silver_searcher
+install jq
+install nkf
+install watch
+
+# Ruby
+install curl-ca-bundle
+install rbenv
+install ruby-build
+install rbenv-gemset
+install rbenv-gem-rehash
+install readline
+install apple-gcc42
+
+# Android
+cask install java
+install android-sdk
+install android-ndk
+install apktool
+
+cask install virtualbox
+cask install vagrant
+cask install mono-mdk
+
