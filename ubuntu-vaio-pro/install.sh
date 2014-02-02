@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 reload_zsh_profile() {
   source ~/.zshenv
@@ -17,8 +17,7 @@ copy_local_bin() {
 git_clone() {
   CLONE_PATH=$1
   GIT_URL=$2
-  if [ ! -d $CLONE_PATH ]; then
-    git clone $GIT_URL $CLONE_PATH
+  if [ ! -d $CLONE_PATH ]; then git clone $GIT_URL $CLONE_PATH
   fi
 }
 
@@ -65,9 +64,9 @@ pushd ~/
   popd
 popd
 
-# rbenv install 2.1.0
-# rbenv install 2.0.0-p353
-# rbenv install 1.9.3-p484
+rbenv install 2.1.0
+rbenv install 2.0.0-p353
+rbenv install 1.9.3-p484
 
 copy_local_bin "./cpufreq"
 copy_local_bin "./powersave"
