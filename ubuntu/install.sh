@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 reload_zsh_profile() {
   source ~/.zshenv
@@ -9,7 +9,9 @@ copy_local_bin() {
   if [ ! -d "/usr/local/bin" ]; then
     mkdir -p "/usr/local/bin"
   fi
-  cp $1 "/usr/local/bin/"
+  if [ ! -f "/usr/local/bin/$(basename \"$1\")" ]; then
+    cp "$1" "/usr/local/bin/$(basename $1)"
+  fi
 }
 
 git_clone() {
@@ -24,7 +26,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 
 sudo apt-get -y install \
-  build-essential
+  build-essential \
   bison \
   libreadline6-dev \
   curl \
@@ -46,26 +48,26 @@ sudo apt-get -y install \
 sudo chsh -s /bin/zsh shunirr
 
 pushd ~/
-  git_clone("~/.rbenv", "https://github.com/sstephenson/rbenv.git")
-  git_clone("~/.rbenv/plugins/ruby-build", "https://github.com/sstephenson/ruby-build.git")
+  git_clone "~/.rbenv", "https://github.com/sstephenson/rbenv.git"
+  git_clone "~/.rbenv/plugins/ruby-build", "https://github.com/sstephenson/ruby-build.git"
   
   # dot-files
   mkdir -p ~/dev
   pushd ~/dev
-    git_clone("dot-files", "git@github.com:shunirr/dot-files.git")
+    git_clone "dot-files", "git@github.com:shunirr/dot-files.git"
     pushd dot-files
       make
       make install
-      reload_zsh_profile()
+      reload_zsh_profile
     popd
   popd
 popd
 
-rbenv install 2.1.0
-rbenv install 2.0.0-p353
-rbenv install 1.9.3-p484
+# rbenv install 2.1.0
+# rbenv install 2.0.0-p353
+# rbenv install 1.9.3-p484
 
-copy_local_bin("./cpufreq")
-copy_local_bin("./powersave")
+copy_local_bin "./cpufreq"
+copy_local_bin "./powersave"
 
 
