@@ -7,10 +7,10 @@ reload_zsh_profile() {
 
 copy_local_bin() {
   if [ ! -d "/usr/local/bin" ]; then
-    mkdir -p "/usr/local/bin"
+    sudo mkdir -p "/usr/local/bin"
   fi
   if [ ! -f "/usr/local/bin/$(basename \"$1\")" ]; then
-    cp "$1" "/usr/local/bin/$(basename $1)"
+    sudo cp "$1" "/usr/local/bin/$(basename $1)"
   fi
 }
 
@@ -43,18 +43,20 @@ sudo apt-get -y install \
   vim \
   zsh \
   gnome-tweak-tool \
-  unity-tweak-tool
+  unity-tweak-tool \
+  xbacklight \
+  ibus-skk
 
 sudo chsh -s /bin/zsh shunirr
 
 pushd ~/
-  git_clone "~/.rbenv", "https://github.com/sstephenson/rbenv.git"
-  git_clone "~/.rbenv/plugins/ruby-build", "https://github.com/sstephenson/ruby-build.git"
+  git_clone ".rbenv"                    "https://github.com/sstephenson/rbenv.git"
+  git_clone ".rbenv/plugins/ruby-build" "https://github.com/sstephenson/ruby-build.git"
   
   # dot-files
   mkdir -p ~/dev
   pushd ~/dev
-    git_clone "dot-files", "git@github.com:shunirr/dot-files.git"
+    git_clone "dot-files" "git@github.com:shunirr/dot-files.git"
     pushd dot-files
       make
       make install
