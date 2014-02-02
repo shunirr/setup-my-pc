@@ -1,0 +1,39 @@
+#!/bin/sh
+# USB の自動サスペンド
+for i in /sys/bus/usb/devices/usb*; do
+  sudo sh -c "echo 1 > $i/power/autosuspend"
+done
+
+# WiFi の省電力設定
+sudo iw dev wlan0 set power_save on
+
+# サウンドまわりの省電力設定
+sudo sh -c "echo 1 > /sys/module/snd_hda_intel/parameters/power_save"
+sudo sh -c "echo 1 > /dev/dsp"
+
+# laptop mode 
+sudo sh -c "echo 5 > /proc/sys/vm/laptop_mode"
+sudo sh -c "echo 0 > /proc/sys/kernel/nmi_watchdog"
+
+sudo sh -c "echo 1500 > /proc/sys/vm/dirty_writeback_centisecs"
+sudo modprobe -r sky2
+
+# PCI 経由で繋がってるものの省電力設定
+for i in /sys/bus/pci/devices/*; do
+  sudo sh -c "echo 'auto' > $i/power/control"
+done
+
+# SSD が稼動してない時に SATA を最低消費電力モードにする設定
+for i in /sys/class/scsi_host/host*; do
+  sudo sh -c "echo 'min_power' > $i/link_power_management_policy"
+done
+
+# CPU 動作モードの変更 (cpufreq は自分で作ったもの)
+cpufreq powersave
+
+# ディスプレイ輝度の変更
+# xbacklight は apt-get install xbacklight で入る
+xbacklight -set 60
+
+# キーボードバックライトの無効化
+sudo sh -c "echo '0' > /sys/devices/platform/sony-laptop/kbd_backlight"

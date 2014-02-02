@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+exit false unless %{ondemand powersave performance}.index(ARGV[0])
+
+(0..3).each do |i|
+  system "sudo su -c 'echo #{ARGV[0]} > /sys/devices/system/cpu/cpu#{i}/cpufreq/scaling_governor'"
+end
