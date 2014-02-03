@@ -33,3 +33,4 @@ cask install virtualbox
 cask install vagrant
 cask install mono-mdk
 
+cask install lastpass-universal
