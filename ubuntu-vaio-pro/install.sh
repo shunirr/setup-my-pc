@@ -1,10 +1,5 @@
 #!/bin/zsh
 
-reload_zsh_profile() {
-  source ~/.zshenv
-  source ~/.zshrc
-}
-
 copy_local_bin() {
   if [ ! -d "/usr/local/bin" ]; then
     sudo mkdir -p "/usr/local/bin"
@@ -59,7 +54,6 @@ pushd ~/
     pushd dot-files
       make
       make install
-      reload_zsh_profile
     popd
   popd
 popd
