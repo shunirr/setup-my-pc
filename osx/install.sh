@@ -10,8 +10,17 @@ brew update
 if [ ! $(brew tap | grep phinze/cask) ]; then
   brew tap phinze/homebrew-cask
 fi
-
 brew install brew-cask
+
+if [ ! $(brew tap | grep homebrew/binary) ]; then
+  brew tap homebrew/binary
+fi
+brew install docker
+
+if [ ! $(brew tap | grep fnichol/dvm) ]; then
+  brew tap fnichol/dvm
+fi
+brew install dvm
 
 # Tools
 brew install zsh
@@ -23,6 +32,7 @@ brew install the_silver_searcher
 brew install jq
 brew install nkf
 brew install watch
+brew install fswatch
 
 # Ruby
 brew install curl-ca-bundle
