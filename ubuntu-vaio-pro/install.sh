@@ -17,11 +17,15 @@ git_clone() {
   fi
 }
 
+sudo add-apt-repository ppa:tualatrix/ppa
+sudo add-apt-repository ppa:indicator-multiload/stable-dialy
+
 sudo apt-get -y update
 sudo apt-get -y upgrade
 
 sudo apt-get -y install \
   build-essential \
+  libgtk-3-dev \
   bison \
   libreadline6-dev \
   curl \
@@ -37,10 +41,27 @@ sudo apt-get -y install \
   libncurses5-dev \
   vim \
   zsh \
+  ubuntu-tweak \
   gnome-tweak-tool \
   unity-tweak-tool \
   xbacklight \
-  ibus-skk
+  ibus-skk \
+  vlc \
+  gdebi \
+  ubuntu-restricted-extras \
+  openjdk-7-jdk \
+  indicator-multiload
+
+
+sudo apt-get remove \
+  unity-webapps-common \
+  xul-ext-websites-integration \
+  ubuntuone-client \
+  python-ubuntuone-client \
+  python-ubuntuone-storageprotocol \
+  unity-lens-shopping
+
+env LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
 
 sudo chsh -s /bin/zsh shunirr
 
