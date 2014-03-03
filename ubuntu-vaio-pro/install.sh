@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 copy_local_bin() {
   if [ ! -d "/usr/local/bin" ]; then
@@ -12,7 +12,8 @@ copy_local_bin() {
 git_clone() {
   CLONE_PATH=$1
   GIT_URL=$2
-  if [ ! -d $CLONE_PATH ]; then git clone $GIT_URL $CLONE_PATH
+  if [ ! -d $CLONE_PATH ]; then
+    yes | git clone $GIT_URL $CLONE_PATH
   fi
 }
 
@@ -46,9 +47,11 @@ sudo chsh -s /bin/zsh shunirr
 pushd ~/
   git_clone ".rbenv"                    "https://github.com/sstephenson/rbenv.git"
   git_clone ".rbenv/plugins/ruby-build" "https://github.com/sstephenson/ruby-build.git"
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
   
   # dot-files
-  mkdir -p ~/dev
+  [[ -d ~/dev ]] || mkdir -p ~/dev
   pushd ~/dev
     git_clone "dot-files" "git@github.com:shunirr/dot-files.git"
     pushd dot-files
@@ -59,10 +62,6 @@ pushd ~/
 popd
 
 rbenv install 2.1.0
-rbenv install 2.0.0-p353
-rbenv install 1.9.3-p484
 
 copy_local_bin "./cpufreq"
 copy_local_bin "./powersave"
-
-
