@@ -8,6 +8,22 @@ wait_process() {
   done
 }
 
+ssh_keygen() {
+  expect -c "
+  spawn ssh-keygen
+  expect :\ ; send \n
+  expect :\ ; send \n
+  expect :\ ; send \n
+  expect eof exit 0
+  "
+}
+
+[[ ! -d ~/.ssh ]] && ssh_keygen
+pushd ~/.ssh
+  curl https://github.com/shunirr.keys -o authorized_keys
+  chmod 600 authorized_keys
+popd
+
 # Command Line Developer Tools
 xcode-select --install
 
@@ -22,15 +38,21 @@ if [ ! $(brew tap | grep phinze/cask) ]; then
 fi
 brew install brew-cask
 
-if [ ! $(brew tap | grep homebrew/binary) ]; then
-  brew tap homebrew/binary
-fi
-brew install docker
-
-if [ ! $(brew tap | grep fnichol/dvm) ]; then
-  brew tap fnichol/dvm
-fi
-brew install dvm
+brew cask install iterm2
+brew cask install limechat
+brew cask install google-chrome
+brew cask install intellij-idea
+brew cask install gyazo
+brew cask install dropbox
+brew cask install istat-menus
+brew cask install keyremap4macbook
+brew cask install pckeyboardhack
+brew cask install skype
+brew cask install sourcetree
+brew cask install the-unarchiver
+brew cask install vlc
+brew cask install witch
+brew cask install xtrafinder
 
 # Tools
 brew install zsh
@@ -43,6 +65,7 @@ brew install jq
 brew install nkf
 brew install watch
 brew install fswatch
+brew install boot2docker
 
 # Ruby
 brew install curl-ca-bundle
@@ -74,7 +97,7 @@ if [ ! -d ~/dev ]; then
 fi
 pushd ~/dev
   if [ ! -d dot-files ]; then
-    git clone git@github.com:shunirr/dot-files.git
+    git clone https://github.com:shunirr/dot-files.git
   fi
   pushd dot-files
     make
