@@ -121,7 +121,7 @@ yes 'y' | android update sdk --no-ui --force
 [[ ! -d ~/dev ]] && mkdir -p ~/dev
 pushd ~/dev
   if [ ! -d dot-files ]; then
-    git clone https://github.com:shunirr/dot-files.git
+    git clone https://github.com/shunirr/dot-files
   fi
   pushd dot-files
     make
