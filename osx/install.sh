@@ -1,7 +1,17 @@
 #!/bin/bash
 
+function wait_process() {
+  while :
+  do
+    [[ ! $(ps aux | grep "$1" | grep -v grep) ]] && break
+    sleep 1
+  done
+}
+
 # Command Line Developer Tools
 xcode-select --install
+
+wait_process "Command Line Developer Tools"
 
 # Homebrew
 ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
@@ -49,6 +59,9 @@ brew install android-sdk
 brew install android-ndk
 brew install apktool
 
+# Android SDK
+yes 'y' | android update sdk --no-ui --force
+
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install mono-mdk
@@ -75,9 +88,4 @@ if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
 fi
 
 rbenv install 2.1.0
-rbenv install 2.0.0-p353
-rbenv install 1.9.3-p484
-
-# Android SDK
-yes 'y' | android update sdk --no-ui --force
 
