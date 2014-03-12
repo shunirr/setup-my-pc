@@ -18,8 +18,22 @@ ssh_keygen() {
   "
 }
 
-sudo sh -c "echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
-sudo dscl . -append /Groups/wheel GroupMembership $(who am i | cut -d" " -f1)
+add_sudoers() {
+  local ENTRY='%wheel ALL=(ALL) NOPASSWD: ALL'
+  if [ ! $(sudo cat /etc/sudoers | grep '${ENTRY}') ]; then
+    sudo sh -c "echo '${ENTRY}' >> /etc/sudoers"
+  fi
+}
+
+join_wheel_group() {
+  local USERNAME=$(who am i | cut -d" " -f1)
+  if [ ! $(dscl . -read /Groups/wheel | grep ${USERNAME}) ]; then
+    sudo dscl . -append /Groups/wheel GroupMembership ${USERNAME}
+  fi
+}
+
+add_sudoers
+join_wheel_group
 
 [[ ! -d ~/.ssh ]] && ssh_keygen
 pushd ~/.ssh
