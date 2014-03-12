@@ -32,28 +32,38 @@ join_wheel_group() {
   fi
 }
 
+install_command_line_developer_tools() {
+  if [ ! -f "/var/db/receipts/com.apple.pkg.DeveloperToolsCLI.bom" ]; then
+    sh -c "xcode-select --install"
+    wait_process "Command Line Developer Tools"
+  fi
+}
+
+install_homebrew() {
+  if [ ! -f "/usr/local/Cellar" ]; then
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+  fi
+}
+
+homebrew_init() {
+  install_homebrew
+  brew update
+  if [ ! $(brew tap | grep phinze/cask) ]; then
+    brew tap phinze/homebrew-cask
+  fi
+  brew install brew-cask
+}
+
 add_sudoers
 join_wheel_group
 
 [[ ! -d ~/.ssh ]] && ssh_keygen
-pushd ~/.ssh
-  curl https://github.com/shunirr.keys -o authorized_keys
-  chmod 600 authorized_keys
-popd
 
-# Command Line Developer Tools
-xcode-select --install
-wait_process "Command Line Developer Tools"
+install_command_line_developer_tools
 
-# Homebrew
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+homebrew_init
 
-brew update
-if [ ! $(brew tap | grep phinze/cask) ]; then
-  brew tap phinze/homebrew-cask
-fi
-brew install brew-cask
-
+# Applications
 brew cask install \
   iterm2 \
   limechat \
@@ -91,7 +101,6 @@ brew install \
 
 # Ruby
 brew install \
-  curl-ca-bundle \
   rbenv \
   ruby-build \
   rbenv-gemset \
@@ -106,13 +115,10 @@ brew install \
   android-ndk \
   apktool
 
-# Android SDK
 yes 'y' | android update sdk --no-ui --force
 
 # dot-files
-if [ ! -d ~/dev ]; then
-  mkdir -p ~/dev
-fi
+[[ ! -d ~/dev ]] && mkdir -p ~/dev
 pushd ~/dev
   if [ ! -d dot-files ]; then
     git clone https://github.com:shunirr/dot-files.git
@@ -123,8 +129,8 @@ pushd ~/dev
   popd
 popd
 
-# Ruby
 if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
+  brew install curl-ca-bundle
   cp "$(brew list curl-ca-bundle)" /usr/local/etc/openssl/cert.pem
 fi
 
