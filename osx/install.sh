@@ -41,7 +41,7 @@ if [ ! $(brew tap | grep phinze/cask) ]; then
 fi
 brew install brew-cask
 
-brew cask install
+brew cask install \
   iterm2 \
   limechat \
   google-chrome \
