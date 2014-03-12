@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function wait_process() {
+wait_process() {
   while :
   do
     [[ ! $(ps aux | grep "$1" | grep -v grep) ]] && break
