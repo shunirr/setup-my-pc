@@ -1,8 +1,8 @@
 #!/bin/bash
 
 wait_process() {
-  while :
-  do
+  sleep 5
+  while : ; do
     [[ ! $(ps aux | grep "$1" | grep -v grep) ]] && break
     sleep 1
   done
@@ -29,7 +29,6 @@ popd
 
 # Command Line Developer Tools
 xcode-select --install
-
 wait_process "Command Line Developer Tools"
 
 # Homebrew
