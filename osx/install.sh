@@ -18,7 +18,7 @@ ssh_keygen() {
   "
 }
 
-sudo sh -c "echo '%wheel ALL=(ALL) NOPASSED: ALL' >> /etc/sudoers"
+sudo sh -c "echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 sudo dscl . -append /Groups/wheel GroupMembership $(who am i | cut -d" " -f1)
 
 [[ ! -d ~/.ssh ]] && ssh_keygen
