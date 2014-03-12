@@ -54,6 +54,18 @@ homebrew_init() {
   brew install brew-cask
 }
 
+install_java() {
+  curl -O "http://support.apple.com/downloads/DL1572/ja_JP/JavaForOSX2013-05.dmg"
+  if [ -f JavaForOSX2013-05.dmg ]; then
+    hdiutil attach JavaForOSX2013-05.dmg
+    pushd /Volumes/Java*
+      sudo installer -pkg JavaForOSX.pkg -target LocalSystem
+    popd
+    rm JavaForOSX2013-05.dmg
+  fi
+  brew cask install java
+}
+
 add_sudoers
 join_wheel_group
 
@@ -109,7 +121,7 @@ brew install \
   apple-gcc42
 
 # Android
-brew cask install java
+install_java
 brew install \
   android-sdk \
   android-ndk \
