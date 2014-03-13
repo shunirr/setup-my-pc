@@ -27,14 +27,14 @@ ssh_keygen() {
 
 add_sudoers() {
   local ENTRY='%wheel ALL=(ALL) NOPASSWD: ALL'
-  if [ ! $(sudo cat /etc/sudoers | grep '${ENTRY}') ]; then
+  if [ ! "$(sudo cat /etc/sudoers | grep '${ENTRY}')" ]; then
     sudo sh -c "echo '${ENTRY}' >> /etc/sudoers"
   fi
 }
 
 join_wheel_group() {
   local USERNAME=$(who am i | cut -d" " -f1)
-  if [ ! $(dscl . -read /Groups/wheel | grep ${USERNAME}) ]; then
+  if [ ! "$(dscl . -read /Groups/wheel | grep ${USERNAME})" ]; then
     sudo dscl . -append /Groups/wheel GroupMembership ${USERNAME}
   fi
 }
