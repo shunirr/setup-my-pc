@@ -109,7 +109,8 @@ brew install \
   nkf \
   watch \
   fswatch \
-  boot2docker
+  boot2docker \
+  tig
 
 # Ruby
 brew install \
@@ -119,6 +120,14 @@ brew install \
   rbenv-gem-rehash \
   readline \
   apple-gcc42
+
+if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
+  brew install curl-ca-bundle
+  cp "$(brew list curl-ca-bundle)" /usr/local/etc/openssl/cert.pem
+fi
+
+rbenv install 2.1.0
+rbenv global 2.1.0
 
 # Android
 install_java
@@ -140,11 +149,4 @@ pushd ~/dev
     make install
   popd
 popd
-
-if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
-  brew install curl-ca-bundle
-  cp "$(brew list curl-ca-bundle)" /usr/local/etc/openssl/cert.pem
-fi
-
-rbenv install 2.1.0
 
