@@ -40,7 +40,7 @@ install_command_line_developer_tools() {
 }
 
 install_homebrew() {
-  if [ ! -f "/usr/local/Cellar" ]; then
+  if [ ! -d "/usr/local/Cellar" ]; then
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
   fi
 }
