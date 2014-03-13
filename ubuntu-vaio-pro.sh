@@ -84,5 +84,5 @@ popd
 
 rbenv install 2.1.0
 
-copy_local_bin "./cpufreq"
-copy_local_bin "./powersave"
+copy_local_bin "./ubuntu-vaio-pro/cpufreq"
+copy_local_bin "./ubuntu-vaio-pro/powersave"
