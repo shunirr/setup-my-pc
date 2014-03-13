@@ -55,25 +55,18 @@ install_homebrew() {
   fi
 }
 
+brew_tap() {
+  local TAP_NAME=$(echo "$1" | sed "s/homebrew-//")
+  if [ ! $(brew tap | grep $TAP_NAME) ]; then
+    brew tap $1
+  fi
+}
+
 homebrew_init() {
   install_homebrew
   brew update
-  if [ ! $(brew tap | grep phinze/cask) ]; then
-    brew tap phinze/homebrew-cask
-  fi
+  brew_tap phinze/homebrew-cask
   brew install brew-cask
-}
-
-install_java() {
-  curl -O "http://support.apple.com/downloads/DL1572/ja_JP/JavaForOSX2013-05.dmg"
-  if [ -f JavaForOSX2013-05.dmg ]; then
-    hdiutil attach JavaForOSX2013-05.dmg
-    pushd /Volumes/Java*
-      sudo installer -pkg JavaForOSX.pkg -target LocalSystem
-    popd
-    rm JavaForOSX2013-05.dmg
-  fi
-  brew cask install java
 }
 
 # Main Process {{{1
@@ -85,6 +78,10 @@ join_wheel_group
 install_command_line_developer_tools
 
 homebrew_init
+
+# brew tap {{{2
+brew_tap shunirr/homebrew-java6
+brew_tap shunirr/homebrew-aquaskk
 
 # Applications {{{2
 brew cask install \
@@ -106,7 +103,8 @@ brew cask install \
   virtualbox \
   vagrant \
   mono-mdk \
-  lastpass-universal
+  lastpass-universal \
+  aqua-skk
 
 # Tools {{{2
 brew install \
@@ -141,7 +139,9 @@ rbenv install ${RUBY_VERSION}
 rbenv global ${RUBY_VERSION}
 
 # Android {{{2
-install_java
+brew cask install \
+  java-for-osx \
+  java
 brew install \
   android-sdk \
   android-ndk \
