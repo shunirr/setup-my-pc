@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Constants {{{1
 RUBY_VERSION="2.1.0"
 
