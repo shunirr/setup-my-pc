@@ -1,10 +1,19 @@
 #!/bin/bash
 
+set -e
+
+# Constants {{{1
+RUBY_VERSION="2.1.0"
+
+# Functions {{{1
 wait_process() {
   sleep 5
-  while : ; do
-    [[ ! $(ps aux | grep "$1" | grep -v grep) ]] && break
+  while true; do
     sleep 1
+    pgrep "$1"
+    if [ $? != 0 ]; then
+      break
+    fi
   done
 }
 
@@ -40,7 +49,8 @@ install_command_line_developer_tools() {
 }
 
 install_homebrew() {
-  if [ ! -d "/usr/local/Cellar" ]; then
+  which brew >/dev/null 2>&1
+  if [ $? != 0 ]; then
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
   fi
 }
@@ -66,6 +76,7 @@ install_java() {
   brew cask install java
 }
 
+# Main Process {{{1
 add_sudoers
 join_wheel_group
 
@@ -75,7 +86,7 @@ install_command_line_developer_tools
 
 homebrew_init
 
-# Applications
+# Applications {{{2
 brew cask install \
   iterm2 \
   limechat \
@@ -97,7 +108,7 @@ brew cask install \
   mono-mdk \
   lastpass-universal
 
-# Tools
+# Tools {{{2
 brew install \
   zsh \
   tmux \
@@ -112,7 +123,7 @@ brew install \
   boot2docker \
   tig
 
-# Ruby
+# Ruby {{{2
 brew install \
   rbenv \
   ruby-build \
@@ -126,10 +137,10 @@ if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
   cp "$(brew list curl-ca-bundle)" /usr/local/etc/openssl/cert.pem
 fi
 
-rbenv install 2.1.0
-rbenv global 2.1.0
+rbenv install ${RUBY_VERSION}
+rbenv global ${RUBY_VERSION}
 
-# Android
+# Android {{{2
 install_java
 brew install \
   android-sdk \
@@ -138,7 +149,7 @@ brew install \
 
 yes 'y' | android update sdk --no-ui --force
 
-# dot-files
+# dot-files {{{2
 [[ ! -d ~/dev ]] && mkdir -p ~/dev
 pushd ~/dev
   if [ ! -d dot-files ]; then
