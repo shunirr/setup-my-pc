@@ -66,7 +66,6 @@ homebrew_init() {
   brew_tap phinze/homebrew-cask
   brew install brew-cask
 }
-
 # Main Process {{{1
 add_sudoers
 join_wheel_group
@@ -86,7 +85,7 @@ brew cask install \
   the-unarchiver \
   witch \
   xtrafinder \
-  lastpass-universal \
+  lastpass \
   aqua-skk
 
 # Tools {{{2
