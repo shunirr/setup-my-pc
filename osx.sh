@@ -63,8 +63,7 @@ brew_tap() {
 homebrew_init() {
   install_homebrew
   brew update
-  brew_tap phinze/homebrew-cask
-  brew install brew-cask
+  brew install caskroom/cask/brew-cask
 }
 # Main Process {{{1
 add_sudoers
