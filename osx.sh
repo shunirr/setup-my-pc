@@ -49,7 +49,7 @@ install_command_line_developer_tools() {
 install_homebrew() {
   which brew >/dev/null 2>&1
   if [ $? != 0 ]; then
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 }
 
@@ -83,24 +83,9 @@ brew_tap shunirr/homebrew-aquaskk
 
 # Applications {{{2
 brew cask install \
-  iterm2 \
-  limechat \
-  google-chrome \
-  intellij-idea \
-  gyazo \
-  dropbox \
-  istat-menus \
-  keyremap4macbook \
-  pckeyboardhack \
-  skype \
-  sourcetree \
   the-unarchiver \
-  vlc \
   witch \
   xtrafinder \
-  virtualbox \
-  vagrant \
-  mono-mdk \
   lastpass-universal \
   aqua-skk
 
@@ -108,16 +93,10 @@ brew cask install \
 brew install \
   zsh \
   tmux \
-  tree \
   wget \
   gnu-sed \
   the_silver_searcher \
-  jq \
-  nkf \
-  watch \
-  fswatch \
-  boot2docker \
-  tig
+  jq
 
 # Ruby {{{2
 brew install \
@@ -140,12 +119,13 @@ rbenv global ${RUBY_VERSION}
 brew cask install \
   java-for-osx \
   java
+
 brew install \
   android-sdk \
   android-ndk \
   apktool
 
-yes 'y' | android update sdk --no-ui --force
+android update sdk --no-ui --force
 
 # dot-files {{{2
 [[ ! -d ~/dev ]] && mkdir -p ~/dev
