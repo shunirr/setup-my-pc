@@ -5,6 +5,6 @@
 ### For OSX
 
 ```shell
-curl -sSL https://raw.github.com/shunirr/setup/master/osx.sh | bash
+curl -sSL https://raw.githubusercontent.com/shunirr/setup/master/osx.sh | bash
 ```
 
