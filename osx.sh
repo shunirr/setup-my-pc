@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Constants {{{1
-RUBY_VERSION="2.1.0"
+RUBY_VERSION="2.2.2"
 
 # Functions {{{1
 wait_process() {
@@ -101,9 +101,7 @@ brew install \
   rbenv \
   ruby-build \
   rbenv-gemset \
-  rbenv-gem-rehash \
-  readline \
-  apple-gcc42
+  rbenv-gem-rehash
 
 if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
   brew install curl-ca-bundle
@@ -112,6 +110,8 @@ fi
 
 rbenv install ${RUBY_VERSION}
 rbenv global ${RUBY_VERSION}
+
+ruby -v
 
 # Android {{{2
 brew cask install \
