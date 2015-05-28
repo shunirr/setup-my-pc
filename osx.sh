@@ -123,7 +123,7 @@ brew install \
   android-ndk \
   apktool
 
-android update sdk --no-ui --force
+echo y | android update sdk --no-ui --force
 
 # dot-files {{{2
 [[ ! -d ~/dev ]] && mkdir -p ~/dev
