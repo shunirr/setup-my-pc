@@ -90,6 +90,9 @@ brew install \
   the_silver_searcher \
   jq
 
+brew install \
+  bash-completion
+
 # Ruby {{{2
 brew install \
   rbenv \
@@ -113,3 +116,10 @@ brew cask install \
 
 brew install \
   apktool
+
+# Vim {{{2
+mkdir -p ~/.vim/bundle
+pushd ~/.vim/bundle
+  curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+  sh installer.sh .
+popd
