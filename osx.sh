@@ -79,7 +79,6 @@ homebrew_init
 brew cask install \
   karabiner \
   seil \
-  aqua-skk \
   dropbox
 
 # Tools {{{2
