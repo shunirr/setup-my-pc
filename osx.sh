@@ -83,15 +83,19 @@ brew cask install \
 
 # Tools {{{2
 brew install \
-  zsh \
   tmux \
   wget \
   gnu-sed \
   the_silver_searcher \
   jq
 
+# Bash {{{2
 brew install \
+  bash \
   bash-completion
+
+echo /usr/local/bin/bash | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/bash
 
 # Ruby {{{2
 brew install \
