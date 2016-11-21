@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Constants {{{1
-RUBY_VERSION="2.2.2"
+RUBY_VERSION="2.3.3"
 
 # Functions {{{1
 wait_process() {
@@ -75,17 +75,12 @@ install_command_line_developer_tools
 
 homebrew_init
 
-# brew tap {{{2
-brew_tap shunirr/homebrew-java6
-brew_tap shunirr/homebrew-aquaskk
-
 # Applications {{{2
 brew cask install \
-  the-unarchiver \
-  witch \
-  xtrafinder \
-  lastpass \
-  aqua-skk
+  karabiner \
+  seil \
+  aqua-skk \
+  dropbox
 
 # Tools {{{2
 brew install \
@@ -115,25 +110,7 @@ ruby -v
 
 # Android {{{2
 brew cask install \
-  java-for-osx \
   java
 
 brew install \
-  android-sdk \
-  android-ndk \
   apktool
-
-echo y | android update sdk --no-ui --force
-
-# dot-files {{{2
-[[ ! -d ~/dev ]] && mkdir -p ~/dev
-pushd ~/dev
-  if [ ! -d dot-files ]; then
-    git clone https://github.com/shunirr/dot-files
-  fi
-  pushd dot-files
-    make
-    make install
-  popd
-popd
-
