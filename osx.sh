@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Constants {{{1
-RUBY_VERSION="2.3.3"
-
-# Functions {{{1
 wait_process() {
   sleep 5
   while true; do
@@ -63,9 +59,11 @@ brew_tap() {
 homebrew_init() {
   install_homebrew
   brew update
-  brew install caskroom/cask/brew-cask
+  brew tap caskroom/cask
 }
-# Main Process {{{1
+
+########
+
 add_sudoers
 join_wheel_group
 
@@ -75,13 +73,14 @@ install_command_line_developer_tools
 
 homebrew_init
 
-# Applications {{{2
-brew cask install \
-  karabiner \
-  seil \
-  dropbox
+brew install mas
+mas install 497799835 # Xcode (10.1)
 
-# Tools {{{2
+brew cask install karabiner-elements
+
+# IME
+brew cask install aquaskk
+
 brew install \
   tmux \
   wget \
@@ -89,7 +88,7 @@ brew install \
   the_silver_searcher \
   jq
 
-# Bash {{{2
+# bash
 brew install \
   bash \
   bash-completion
@@ -97,7 +96,9 @@ brew install \
 echo /usr/local/bin/bash | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
 
-# Ruby {{{2
+# Ruby
+RUBY_VERSION="2.5.3"
+
 brew install \
   rbenv \
   ruby-build \
@@ -111,19 +112,26 @@ fi
 
 rbenv install ${RUBY_VERSION}
 rbenv global ${RUBY_VERSION}
+gem install bundler
 
-ruby -v
+# Android
+brew cask install java
+brew cask install android-studio
+brew install apktool
 
-# Android {{{2
-brew cask install \
-  java
+# Other applications
 
-brew install \
-  apktool
+brew cask install visual-studio-code
 
-# Vim {{{2
-mkdir -p ~/.vim/bundle
-pushd ~/.vim/bundle
-  curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-  sh installer.sh .
-popd
+mas install 409183694 # Keynote (8.3)
+mas install 409201541 # Pages (7.3)
+mas install 409203825 # Numbers (5.3)
+mas install 408981434 # iMovie (10.1.10)
+
+mas install 425424353 # The Unarchiver (4.0.0)
+mas install 918858936 # Airmail 3 (3.6.50)
+mas install 412485838 # Witch (3.9.8)
+mas install 803453959 # Slack (3.3.3)
+mas install 407963104 # Pixelmator (3.7.5)
+mas install 539883307 # LINE (5.11.2)
+mas install 1024640650 # CotEditor (3.6.6)
