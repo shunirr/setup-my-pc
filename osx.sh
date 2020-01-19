@@ -39,6 +39,7 @@ install_command_line_developer_tools() {
   if [ ! -f "/var/db/receipts/com.apple.pkg.DeveloperToolsCLI.bom" ]; then
     sh -c "xcode-select --install"
     wait_process "Command Line Developer Tools"
+    sudo xcodebuild -license accept
   fi
 }
 
@@ -59,7 +60,7 @@ brew_tap() {
 homebrew_init() {
   install_homebrew
   brew update
-  brew tap caskroom/cask
+  brew tap homebrew/cask-cask
 }
 
 ########
