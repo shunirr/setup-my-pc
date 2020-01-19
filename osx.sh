@@ -97,13 +97,12 @@ echo /usr/local/bin/bash | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
 
 # Ruby
-RUBY_VERSION="2.5.3"
+RUBY_VERSION="2.7.0"
 
 brew install \
   rbenv \
   ruby-build \
-  rbenv-gemset \
-  rbenv-gem-rehash
+  rbenv-gemset
 
 if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
   brew install curl-ca-bundle
