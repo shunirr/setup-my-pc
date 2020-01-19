@@ -84,7 +84,6 @@ brew cask install aquaskk
 brew install \
   tmux \
   wget \
-  gnu-sed \
   the_silver_searcher \
   jq
 
@@ -122,11 +121,6 @@ brew install apktool
 # Other applications
 
 brew cask install visual-studio-code
-
-mas install 409183694 # Keynote (8.3)
-mas install 409201541 # Pages (7.3)
-mas install 409203825 # Numbers (5.3)
-mas install 408981434 # iMovie (10.1.10)
 
 mas install 425424353 # The Unarchiver (4.0.0)
 mas install 918858936 # Airmail 3 (3.6.50)
