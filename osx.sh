@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/bash -x
+
+set -eu
 
 wait_process() {
   sleep 5
@@ -36,7 +38,7 @@ join_wheel_group() {
 }
 
 install_command_line_developer_tools() {
-  if [ ! -f "/var/db/receipts/com.apple.pkg.DeveloperToolsCLI.bom" ]; then
+  if [ ! -f "/var/db/receipts/com.apple.pkg.Xcode.bom" ]; then
     sh -c "xcode-select --install"
     wait_process "Command Line Developer Tools"
     sudo xcodebuild -license accept
@@ -50,17 +52,9 @@ install_homebrew() {
   fi
 }
 
-brew_tap() {
-  local TAP_NAME=$(echo "$1" | sed "s/homebrew-//")
-  if [ ! $(brew tap | grep $TAP_NAME) ]; then
-    brew tap $1
-  fi
-}
-
 homebrew_init() {
   install_homebrew
   brew update
-  brew tap homebrew/cask-cask
 }
 
 ########
@@ -75,11 +69,12 @@ install_command_line_developer_tools
 homebrew_init
 
 brew install mas
+
 mas install 497799835 # Xcode (10.1)
+sudo xcodebuild -license accept
 
 brew cask install karabiner-elements
 
-# IME
 brew cask install aquaskk
 
 brew install \
@@ -96,36 +91,43 @@ brew install \
 echo /usr/local/bin/bash | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
 
-# Ruby
-RUBY_VERSION="2.7.0"
+# asdf
+brew install asdf
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
+echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.bash_profile
 
-brew install \
-  rbenv \
-  ruby-build \
-  rbenv-gemset
-
-if [ ! -f /usr/local/etc/openssl/cert.pem ]; then
-  brew install curl-ca-bundle
-  cp "$(brew list curl-ca-bundle)" /usr/local/etc/openssl/cert.pem
+# ruby
+if [ ! $(asdf plugin list | grep ruby) ]; then
+  asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
+  asdf install ruby 2.7.0
+  asdf global ruby 2.7.0
+  gem install bundler
 fi
 
-rbenv install ${RUBY_VERSION}
-rbenv global ${RUBY_VERSION}
-gem install bundler
+# nodejs
+if [ ! $(asdf plugin list | grep nodejs) ]; then
+  asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+  brew install gpg coreutils
+  bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+  asdf install nodejs 14.15.1
+  asdf global nodejs 14.15.1
+fi
+
+# java
+brew install openjdk
 
 # Android
-brew cask install java
 brew cask install android-studio
-brew install apktool
+brew install apktool bundletool
 
 # Other applications
 
 brew cask install visual-studio-code
+brew cask install notable
 
 mas install 425424353 # The Unarchiver (4.0.0)
 mas install 918858936 # Airmail 3 (3.6.50)
 mas install 412485838 # Witch (3.9.8)
 mas install 803453959 # Slack (3.3.3)
-mas install 407963104 # Pixelmator (3.7.5)
 mas install 539883307 # LINE (5.11.2)
 mas install 1024640650 # CotEditor (3.6.6)
