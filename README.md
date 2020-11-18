@@ -1,10 +1,8 @@
 # Setup My PC
 
-## Usage
-
-### For OSX
-
 ```shell
-curl -sSL https://raw.githubusercontent.com/shunirr/setup/master/osx.sh | bash
+git clone git@github.com:shunirr/setup-my-pc.git
+cd setup-my-pc
+./osx.sh
 ```
 
