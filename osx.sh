@@ -130,6 +130,7 @@ brew cask install aquaskk
 brew cask install iterm2
 brew cask install visual-studio-code
 brew cask install notable
+brew cask install istat-menus
 
 mas install 425424353 # The Unarchiver (4.0.0)
 mas install 918858936 # Airmail 3 (3.6.50)
