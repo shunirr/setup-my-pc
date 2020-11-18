@@ -88,7 +88,9 @@ brew install \
   bash \
   bash-completion
 
-echo /usr/local/bin/bash | sudo tee -a /etc/shells
+if [ ! $(cat /etc/shells | grep /usr/local/bin/bash) ]; then
+  echo /usr/local/bin/bash | sudo tee -a /etc/shells
+fi
 chsh -s /usr/local/bin/bash
 
 # asdf
