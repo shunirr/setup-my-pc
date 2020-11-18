@@ -122,6 +122,7 @@ brew install apktool bundletool
 
 # Other applications
 
+brew cask install iterm2
 brew cask install visual-studio-code
 brew cask install notable
 
