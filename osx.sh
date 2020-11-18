@@ -73,11 +73,9 @@ brew install mas
 mas install 497799835 # Xcode (10.1)
 sudo xcodebuild -license accept
 
-brew cask install karabiner-elements
-
-brew cask install aquaskk
 
 brew install \
+  git \
   tmux \
   wget \
   the_silver_searcher \
@@ -95,8 +93,10 @@ chsh -s /usr/local/bin/bash
 
 # asdf
 brew install asdf
-echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
-echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.bash_profile
+if [ ! $(cat ~/.bash_profile | grep asdf) ]; then
+  echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
+  echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.bash_profile
+fi
 
 # ruby
 if [ ! $(asdf plugin list | grep ruby) ]; then
@@ -124,6 +124,9 @@ brew install apktool bundletool
 
 # Other applications
 
+brew cask install karabiner-elements
+brew cask install aquaskk
+
 brew cask install iterm2
 brew cask install visual-studio-code
 brew cask install notable
@@ -134,3 +137,5 @@ mas install 412485838 # Witch (3.9.8)
 mas install 803453959 # Slack (3.3.3)
 mas install 539883307 # LINE (5.11.2)
 mas install 1024640650 # CotEditor (3.6.6)
+
+cp -v -R dot-files/. $HOME
