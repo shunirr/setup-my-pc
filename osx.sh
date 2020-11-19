@@ -132,11 +132,9 @@ brew cask install visual-studio-code
 brew cask install notable
 brew cask install istat-menus
 
-mas install 425424353 # The Unarchiver (4.0.0)
-mas install 918858936 # Airmail 3 (3.6.50)
-mas install 412485838 # Witch (3.9.8)
-mas install 803453959 # Slack (3.3.3)
-mas install 539883307 # LINE (5.11.2)
-mas install 1024640650 # CotEditor (3.6.6)
+mas install 425424353 # The Unarchiver
+mas install 803453959 # Slack
+mas install 539883307 # LINE
+mas install 1024640650 # CotEditor
 
 cp -v -R dot-files/. $HOME
