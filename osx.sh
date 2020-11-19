@@ -73,7 +73,6 @@ brew install mas
 mas install 497799835 # Xcode (10.1)
 sudo xcodebuild -license accept
 
-
 brew install \
   git \
   tmux \
@@ -123,7 +122,6 @@ brew cask install android-studio
 brew install apktool bundletool
 
 # Other applications
-
 brew cask install karabiner-elements
 brew cask install aquaskk
 
@@ -137,4 +135,11 @@ mas install 803453959 # Slack
 mas install 539883307 # LINE
 mas install 1024640650 # CotEditor
 
+# Fonts
+brew tap sanemat/font
+brew install ricty
+cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
+fc-cache -vf
+
+# Copy dot-files
 cp -v -R dot-files/. $HOME
