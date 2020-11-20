@@ -8,3 +8,6 @@ alias ls="ls -F -G"
 
 shopt -s globstar
 shopt -s autocd
+
+# Android SDK
+export PATH=$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools:$PATH
