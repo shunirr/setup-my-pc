@@ -57,6 +57,24 @@ homebrew_init() {
   brew update
 }
 
+brew_install() {
+  if [ ! -d /usr/local/Cellar/$1 ]; then
+    brew install $1
+  fi
+}
+
+brew_cask_install() {
+  if [ ! -d /usr/local/Caskroom/$1 ]; then
+    brew cask install $1
+  fi
+}
+
+mas_install() {
+  if [ ! "$(mas list | grep $1)" ]; then
+    mas install $1
+  fi
+}
+
 ########
 
 add_sudoers
@@ -68,22 +86,20 @@ install_command_line_developer_tools
 
 homebrew_init
 
-brew install mas
+brew_install mas
 
-mas install 497799835 # Xcode (10.1)
+mas_install 497799835 # Xcode (10.1)
 sudo xcodebuild -license accept
 
-brew install \
-  git \
-  tmux \
-  wget \
-  the_silver_searcher \
-  jq
+brew_install git
+brew_install tmux
+brew_install wget
+brew_install the_silver_searcher
+brew_install jq
 
 # bash
-brew install \
-  bash \
-  bash-completion
+brew_install bash
+brew_install bash-completion
 
 if [ ! $(cat /etc/shells | grep /usr/local/bin/bash) ]; then
   echo /usr/local/bin/bash | sudo tee -a /etc/shells
@@ -91,7 +107,7 @@ fi
 chsh -s /usr/local/bin/bash
 
 # asdf
-brew install asdf
+brew_install asdf
 if [ ! $(cat ~/.bash_profile | grep asdf) ]; then
   echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
   echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.bash_profile
@@ -108,36 +124,37 @@ fi
 # nodejs
 if [ ! $(asdf plugin list | grep nodejs) ]; then
   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-  brew install gpg coreutils
+  brew_install gpg
+  brew_install coreutils
   bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
   asdf install nodejs 14.15.1
   asdf global nodejs 14.15.1
 fi
 
 # java
-brew install openjdk
+brew_install openjdk
 
 # Android
-brew cask install android-studio
-brew install apktool bundletool
+brew_cask_install android-studio
+brew_install apktool bundletool
 
 # Other applications
-brew cask install karabiner-elements
-brew cask install aquaskk
+brew_cask_install karabiner-elements
+brew_cask_install aquaskk
 
-brew cask install iterm2
-brew cask install visual-studio-code
-brew cask install notable
-brew cask install istat-menus
+brew_cask_install iterm2
+brew_cask_install visual-studio-code
+brew_cask_install notable
+brew_cask_install istat-menus
 
-mas install 425424353 # The Unarchiver
-mas install 803453959 # Slack
-mas install 539883307 # LINE
-mas install 1024640650 # CotEditor
+mas_install 425424353 # The Unarchiver
+mas_install 803453959 # Slack
+mas_install 539883307 # LINE
+mas_install 1024640650 # CotEditor
 
 # Fonts
 brew tap sanemat/font
-brew install ricty
+brew_install ricty
 cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
 
