@@ -151,11 +151,12 @@ brew_install apktool bundletool
 # Other applications
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
-
+brew_cask_install google-chrome
 brew_cask_install iterm2
 brew_cask_install visual-studio-code
 brew_cask_install notable
 brew_cask_install istat-menus
+brew_cask_install zoomus
 
 mas_install 425424353 # The Unarchiver
 mas_install 803453959 # Slack
