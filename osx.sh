@@ -119,7 +119,7 @@ fi
 
 # asdf
 brew_install asdf
-if [ ! "$(asdf)" ]; then
+if [ ! "$(asdf --version)" ]; then
   . $(brew --prefix asdf)/asdf.sh
 fi
 
@@ -142,7 +142,11 @@ if [ ! $(asdf plugin list | grep nodejs) ]; then
 fi
 
 # java
-brew_install openjdk
+if [ ! $(asdf plugin list | grep java) ]; then
+  asdf plugin-add java https://github.com/halcyon/asdf-java.git
+  asdf install java openjdk-15.0.1
+  asdf global java openjdk-15.0.1
+fi
 
 # Android
 brew_cask_install android-studio

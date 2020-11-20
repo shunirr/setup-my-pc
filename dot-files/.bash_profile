@@ -7,6 +7,9 @@ fi
 if [ -f /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash ]; then
   . /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
 fi
+if [ -f $HOME/.asdf/plugins/java/set-java-home.bash ]; then
+  . $HOME/.asdf/plugins/java/set-java-home.bash
+fi
 
 export LANG="ja_JP.UTF-8"
 export LC_COLLATE="ja_JP.UTF-8"
