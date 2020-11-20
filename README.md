@@ -1,8 +1,9 @@
 # Setup My PC
 
 ```shell
-git clone git@github.com:shunirr/setup-my-pc.git
-cd setup-my-pc
+curl -L -O https://github.com/shunirr/setup-my-pc/archive/master.zip
+unzip master.zip
+cd setup-my-pc-master
 ./osx.sh
 ```
 
