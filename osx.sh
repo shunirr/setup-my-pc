@@ -48,7 +48,7 @@ install_command_line_developer_tools() {
 install_homebrew() {
   which brew >/dev/null 2>&1
   if [ $? != 0 ]; then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   fi
 }
 
