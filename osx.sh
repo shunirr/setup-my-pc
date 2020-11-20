@@ -75,6 +75,15 @@ mas_install() {
   fi
 }
 
+install_ricty() {
+  if [ ! "$(ls ~/Library/Fonts/Ricty*.ttf)" ]; then
+    brew tap sanemat/font
+    brew_install ricty
+    cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
+    fc-cache -vf
+  fi
+}
+
 ########
 
 add_sudoers
@@ -101,16 +110,17 @@ brew_install jq
 brew_install bash
 brew_install bash-completion
 
-if [ ! $(cat /etc/shells | grep /usr/local/bin/bash) ]; then
+if [ ! "$(cat /etc/shells | grep /usr/local/bin/bash)" ]; then
   echo /usr/local/bin/bash | sudo tee -a /etc/shells
 fi
-chsh -s /usr/local/bin/bash
+if [ "$(dscl localhost -read Local/Default/Users/$USER UserShell | cut -d' ' -f2)" != "/usr/local/bin/bash" ]; then
+  chsh -s /usr/local/bin/bash
+fi
 
 # asdf
 brew_install asdf
-if [ ! $(cat ~/.bash_profile | grep asdf) ]; then
-  echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
-  echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.bash_profile
+if [ ! "$(asdf)" ]l then
+  . $(brew --prefix asdf)/asdf.sh
 fi
 
 # ruby
@@ -153,10 +163,7 @@ mas_install 539883307 # LINE
 mas_install 1024640650 # CotEditor
 
 # Fonts
-brew tap sanemat/font
-brew_install ricty
-cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
-fc-cache -vf
+install_ricty
 
 # Copy dot-files
 cp -v -R dot-files/. $HOME
