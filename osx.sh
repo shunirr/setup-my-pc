@@ -119,7 +119,7 @@ fi
 
 # asdf
 brew_install asdf
-if [ ! "$(asdf)" ]l then
+if [ ! "$(asdf)" ]; then
   . $(brew --prefix asdf)/asdf.sh
 fi
 
