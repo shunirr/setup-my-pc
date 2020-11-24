@@ -86,6 +86,13 @@ install_ricty() {
 
 ########
 
+UNAME="$(uname)"
+UNAME_MACHINE="$(uname -m)"
+if [[ "$UNAME" != "Darwin" ]] || [[ "$UNAME_MACHINE" != "x86_64" ]]; then
+  echo "Unsupported machine: ${UNAME} ${UNAME_MACHINE}"
+  exit -1
+fi
+
 add_sudoers
 join_wheel_group
 
