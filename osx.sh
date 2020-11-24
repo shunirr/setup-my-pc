@@ -7,7 +7,7 @@ wait_process() {
   while true; do
     sleep 1
     pgrep "$1" >/dev/null 2>&1
-    if [ $? != 0 ]; then
+    if [[ $? != 0 ]]; then
       break
     fi
   done
@@ -25,20 +25,20 @@ ssh_keygen() {
 
 add_sudoers() {
   local ENTRY='%wheel ALL=(ALL) NOPASSWD: ALL'
-  if [ ! "$(sudo cat /etc/sudoers | grep '${ENTRY}')" ]; then
+  if [[ ! "$(sudo cat /etc/sudoers | grep '${ENTRY}')" ]]; then
     sudo sh -c "echo '${ENTRY}' >> /etc/sudoers"
   fi
 }
 
 join_wheel_group() {
   local USERNAME=$(who am i | cut -d" " -f1)
-  if [ ! "$(dscl . -read /Groups/wheel | grep ${USERNAME})" ]; then
+  if [[ ! "$(dscl . -read /Groups/wheel | grep ${USERNAME})" ]]; then
     sudo dscl . -append /Groups/wheel GroupMembership ${USERNAME}
   fi
 }
 
 install_command_line_developer_tools() {
-  if [ ! -f "/var/db/receipts/com.apple.pkg.Xcode.bom" ]; then
+  if [[ ! -f "/var/db/receipts/com.apple.pkg.Xcode.bom" ]]; then
     sh -c "xcode-select --install"
     wait_process "Command Line Developer Tools"
     sudo xcodebuild -license accept
@@ -47,7 +47,7 @@ install_command_line_developer_tools() {
 
 install_homebrew() {
   which brew >/dev/null 2>&1
-  if [ $? != 0 ]; then
+  if [[ $? != 0 ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   fi
 }
@@ -58,25 +58,25 @@ homebrew_init() {
 }
 
 brew_install() {
-  if [ ! -d /usr/local/Cellar/$1 ]; then
+  if [[ ! -d /usr/local/Cellar/$1 ]]; then
     brew install $1
   fi
 }
 
 brew_cask_install() {
-  if [ ! -d /usr/local/Caskroom/$1 ]; then
+  if [[ ! -d /usr/local/Caskroom/$1 ]]; then
     brew cask install $1
   fi
 }
 
 mas_install() {
-  if [ ! "$(mas list | grep $1)" ]; then
+  if [[ ! "$(mas list | grep $1)" ]]; then
     mas install $1
   fi
 }
 
 install_ricty() {
-  if [ ! "$(ls ~/Library/Fonts/Ricty*.ttf)" ]; then
+  if [[ ! "$(ls ~/Library/Fonts/Ricty*.ttf)" ]]; then
     brew tap sanemat/font
     brew_install ricty
     cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
@@ -117,21 +117,21 @@ brew_install jq
 brew_install bash
 brew_install bash-completion
 
-if [ ! "$(cat /etc/shells | grep /usr/local/bin/bash)" ]; then
+if [[ ! "$(cat /etc/shells | grep /usr/local/bin/bash)" ]]; then
   echo /usr/local/bin/bash | sudo tee -a /etc/shells
 fi
-if [ "$(dscl localhost -read Local/Default/Users/$USER UserShell | cut -d' ' -f2)" != "/usr/local/bin/bash" ]; then
+if [[ "$(dscl localhost -read Local/Default/Users/$USER UserShell | cut -d' ' -f2)" != "/usr/local/bin/bash" ]]; then
   chsh -s /usr/local/bin/bash
 fi
 
 # asdf
 brew_install asdf
-if [ ! "$(asdf --version)" ]; then
+if [[ ! "$(asdf --version)" ]]; then
   . $(brew --prefix asdf)/asdf.sh
 fi
 
 # ruby
-if [ ! $(asdf plugin list | grep ruby) ]; then
+if [[ ! $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
   asdf install ruby 2.7.0
   asdf global ruby 2.7.0
@@ -139,7 +139,7 @@ if [ ! $(asdf plugin list | grep ruby) ]; then
 fi
 
 # nodejs
-if [ ! $(asdf plugin list | grep nodejs) ]; then
+if [[ ! $(asdf plugin list | grep nodejs) ]]; then
   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
   brew_install gpg
   brew_install coreutils
@@ -149,7 +149,7 @@ if [ ! $(asdf plugin list | grep nodejs) ]; then
 fi
 
 # java
-if [ ! $(asdf plugin list | grep java) ]; then
+if [[ ! $(asdf plugin list | grep java) ]]; then
   asdf plugin-add java https://github.com/halcyon/asdf-java.git
   asdf install java openjdk-15.0.1
   asdf global java openjdk-15.0.1
