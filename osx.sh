@@ -159,6 +159,11 @@ fi
 brew_cask_install android-studio
 brew_install apktool bundletool
 
+# Graph
+
+brew_install graphviz
+brew_install plantuml
+
 # Other applications
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
