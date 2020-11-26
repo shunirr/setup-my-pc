@@ -170,6 +170,7 @@ brew_cask_install aquaskk
 brew_cask_install google-chrome
 brew_cask_install iterm2
 brew_cask_install visual-studio-code
+brew_cask_install visual-studio # Mono/Xamarin
 brew_cask_install notable
 brew_cask_install istat-menus
 brew_cask_install zoomus
