@@ -148,6 +148,17 @@ if [[ ! $(asdf plugin list | grep nodejs) ]]; then
   asdf global nodejs 14.15.1
 fi
 
+# uninstall default java8
+if [[ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]]; then
+  sudo rm -fr "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
+fi
+if [[ -d "/Library/PreferencesPanes/JavaControlPanel.prefPane" ]]; then
+  sudo rm -fr "/Library/PreferencesPanes/JavaControlPanel.prefPane"
+fi
+if [[ -d "$HOME/Library/Application Support/Java" ]]; then
+  sudo rm -fr "$HOME/Library/Application Support/Java"
+fi
+
 # java
 if [[ ! $(asdf plugin list | grep java) ]]; then
   asdf plugin-add java https://github.com/halcyon/asdf-java.git
@@ -160,7 +171,6 @@ brew_cask_install android-studio
 brew_install apktool bundletool
 
 # Graph
-
 brew_install graphviz
 brew_install plantuml
 
