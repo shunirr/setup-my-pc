@@ -175,6 +175,8 @@ brew_install graphviz
 brew_install plantuml
 
 # Other applications
+brew_install bitwarden-cli
+
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
 brew_cask_install google-chrome
