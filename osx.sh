@@ -198,3 +198,6 @@ install_ricty
 
 # Copy dot-files
 cp -v -R dot-files/. $HOME
+
+[[ ! -f "$HOME/.bashrc_private" ]] && touch "$HOME/.bashrc_private"
+
