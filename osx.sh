@@ -187,6 +187,7 @@ brew_cask_install notable
 brew_cask_install istat-menus
 brew_cask_install zoomus
 brew_cask_install microsoft-office
+brew_cask_install sourcetree
 
 mas_install 425424353 # The Unarchiver
 mas_install 803453959 # Slack
