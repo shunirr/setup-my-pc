@@ -195,12 +195,11 @@ brew_cask_install notable
 brew_cask_install istat-menus
 brew_cask_install zoomus
 brew_cask_install microsoft-office
-brew_cask_install sourcetree
+brew_cask_install google-backup-and-sync
 
 mas_install 425424353 # The Unarchiver
 mas_install 803453959 # Slack
 mas_install 539883307 # LINE
-mas_install 1024640650 # CotEditor
 
 # Fonts
 install_ricty
