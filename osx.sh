@@ -193,7 +193,7 @@ brew_cask_install visual-studio-code
 brew_cask_install visual-studio # Mono/Xamarin
 brew_cask_install notable
 brew_cask_install istat-menus
-brew_cask_install zoomus
+brew_cask_install zoom
 brew_cask_install microsoft-office
 brew_cask_install google-backup-and-sync
 
