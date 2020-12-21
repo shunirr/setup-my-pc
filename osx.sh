@@ -166,6 +166,13 @@ if [[ ! $(asdf plugin list | grep java) ]]; then
   asdf global java openjdk-15.0.1
 fi
 
+# kotlin
+if [[ ! $(asdf plugin list | grep kotlin) ]]; then
+  asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
+  asdf install kotlin 1.4.21
+  asdf global kotlin 1.4.21
+fi
+
 # Android
 brew_cask_install android-studio
 brew_install apktool bundletool
