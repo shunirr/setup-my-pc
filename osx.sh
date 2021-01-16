@@ -200,6 +200,7 @@ brew_cask_install google-backup-and-sync
 mas_install 425424353 # The Unarchiver
 mas_install 803453959 # Slack
 mas_install 539883307 # LINE
+mas_install 571213070 # DaVinci Resolve
 
 # Fonts
 install_ricty
