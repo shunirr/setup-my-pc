@@ -38,16 +38,14 @@ join_wheel_group() {
 }
 
 install_command_line_developer_tools() {
-  if [[ ! -f "/var/db/receipts/com.apple.pkg.Xcode.bom" ]]; then
+  if [[ ! -d "/Library/Developer/CommandLineTools" ]]; then
     sh -c "xcode-select --install"
     wait_process "Command Line Developer Tools"
-    sudo xcodebuild -license accept
   fi
 }
 
 install_homebrew() {
-  which brew >/dev/null 2>&1
-  if [[ $? != 0 ]]; then
+  if [[ ! "$(brew --version)" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   fi
 }
@@ -86,17 +84,27 @@ install_ricty() {
 
 ########
 
-UNAME="$(uname)"
-UNAME_MACHINE="$(uname -m)"
-if [[ "$UNAME" != "Darwin" ]] || [[ "$UNAME_MACHINE" != "x86_64" ]]; then
-  echo "Unsupported machine: ${UNAME} ${UNAME_MACHINE}"
-  exit -1
-fi
-
 add_sudoers
 join_wheel_group
 
 [[ ! -d ~/.ssh ]] && ssh_keygen
+
+UNAME="$(uname)"
+UNAME_MACHINE="$(uname -m)"
+
+# If AppleSilicon Mac
+if [[ "$UNAME" == "Darwin" ]] && [[ "$UNAME_MACHINE" == "arm64" ]]; then
+  # Install Rosetta2
+  expect -c "
+  spawn softwareupdate --install-rosetta
+  expect :\ ; send A\n
+  expect eof exit 0
+  "
+
+  # Re-launch install script by x86_64
+  arch -arch x86_64 $0
+  exit 0
+fi
 
 install_command_line_developer_tools
 
@@ -104,7 +112,7 @@ homebrew_init
 
 brew_install mas
 
-mas_install 497799835 # Xcode (10.1)
+mas_install 497799835 # Xcode
 sudo xcodebuild -license accept
 
 brew_install git
@@ -113,7 +121,7 @@ brew_install wget
 brew_install the_silver_searcher
 brew_install jq
 
-# bash
+# Bash
 brew_install bash
 brew_install bash-completion
 
@@ -130,7 +138,7 @@ if [[ ! "$(asdf --version)" ]]; then
   . $(brew --prefix asdf)/asdf.sh
 fi
 
-# ruby
+# Ruby
 if [[ ! $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
   asdf install ruby 2.7.0
@@ -138,7 +146,7 @@ if [[ ! $(asdf plugin list | grep ruby) ]]; then
   gem install bundler
 fi
 
-# nodejs
+# Nodejs
 if [[ ! $(asdf plugin list | grep nodejs) ]]; then
   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
   brew_install gpg
@@ -148,7 +156,7 @@ if [[ ! $(asdf plugin list | grep nodejs) ]]; then
   asdf global nodejs 14.15.1
 fi
 
-# uninstall default java8
+# Uninstall default java8
 if [[ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]]; then
   sudo rm -fr "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
 fi
@@ -159,7 +167,7 @@ if [[ -d "$HOME/Library/Application Support/Java" ]]; then
   sudo rm -fr "$HOME/Library/Application Support/Java"
 fi
 
-# java
+# Java
 if [[ ! $(asdf plugin list | grep java) ]]; then
   asdf plugin-add java https://github.com/halcyon/asdf-java.git
   asdf install java openjdk-15.0.1
@@ -197,12 +205,12 @@ brew_cask_install notable
 brew_cask_install istat-menus
 brew_cask_install zoom
 brew_cask_install microsoft-office
-brew_cask_install sourcetree
+brew_cask_install google-backup-and-sync
 
 mas_install 425424353 # The Unarchiver
 mas_install 803453959 # Slack
 mas_install 539883307 # LINE
-mas_install 1024640650 # CotEditor
+mas_install 571213070 # DaVinci Resolve
 
 # Fonts
 install_ricty
