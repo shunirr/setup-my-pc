@@ -65,7 +65,7 @@ brew_install() {
 
 brew_cask_install() {
   if [[ ! -d /usr/local/Caskroom/$1 ]]; then
-    brew cask install $1
+    brew install $1
   fi
 }
 
@@ -183,6 +183,9 @@ brew_install plantuml
 
 # Other applications
 brew_install bitwarden-cli
+
+# Xamarin
+brew install mono-libgdiplus
 
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
