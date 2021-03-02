@@ -193,14 +193,17 @@ brew_install plantuml
 brew_install bitwarden-cli
 
 # Xamarin
-brew install mono-libgdiplus
+brew_cask_install visual-studio
+brew_cask_install xamarin-ios
+brew_cask_install xamarin-android
+brew_cask_install dotnet-sdk
+brew_install mono-libgdiplus
 
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
 brew_cask_install google-chrome
 brew_cask_install iterm2
 brew_cask_install visual-studio-code
-brew_cask_install visual-studio # Mono/Xamarin
 brew_cask_install notable
 brew_cask_install istat-menus
 brew_cask_install zoom
