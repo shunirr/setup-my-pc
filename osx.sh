@@ -51,6 +51,7 @@ install_homebrew() {
 homebrew_init() {
   install_homebrew
   brew update
+  brew upgrade
 }
 
 brew_install() {
