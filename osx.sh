@@ -1,6 +1,4 @@
-#!/bin/bash -x
-
-set -eu
+#!/usr/bin/env bash -eux
 
 wait_process() {
   sleep 5
@@ -63,7 +61,7 @@ brew_install() {
 
 brew_cask_install() {
   if [[ ! -d /usr/local/Caskroom/$1 ]]; then
-    brew install $1
+    brew install --cask $1
   fi
 }
 
@@ -192,13 +190,6 @@ brew_install plantuml
 # Other applications
 brew_install bitwarden-cli
 
-# Xamarin
-brew_cask_install visual-studio
-brew_cask_install xamarin-ios
-brew_cask_install xamarin-android
-brew_cask_install dotnet-sdk
-brew_install mono-libgdiplus
-
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
 brew_cask_install google-chrome
@@ -209,11 +200,11 @@ brew_cask_install istat-menus
 brew_cask_install zoom
 brew_cask_install microsoft-office
 brew_cask_install google-backup-and-sync
+brew_cask_install virtualbox
+brew_cask_install the-unarchiver
+brew_cask_install slack
 
-mas_install 425424353 # The Unarchiver
-mas_install 803453959 # Slack
 mas_install 539883307 # LINE
-mas_install 571213070 # DaVinci Resolve
 
 # Fonts
 install_ricty
