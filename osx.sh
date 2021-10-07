@@ -4,10 +4,12 @@ wait_process() {
   sleep 5
   while true; do
     sleep 1
+    set +e
     pgrep "$1" >/dev/null 2>&1
     if [[ $? != 0 ]]; then
       break
     fi
+    set -e
   done
 }
 
