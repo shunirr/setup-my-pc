@@ -135,15 +135,22 @@ fi
 
 # asdf
 brew_install asdf
-if [[ ! "$(asdf --version)" ]]; then
-  . $(brew --prefix asdf)/asdf.sh
-fi
+
+# Copy dot-files
+cp -v -R dot-files/. $HOME
+
+[[ ! -f "$HOME/.bashrc_private" ]] && touch "$HOME/.bashrc_private"
+
+# Load bashrc
+source ~/.bashrc
 
 # Ruby
 if [[ ! $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
   asdf install ruby 2.7.0
   asdf global ruby 2.7.0
+fi
+if [[ ! $(type bundler >/dev/null 2>&1) ]]; then
   gem install bundler
 fi
 
@@ -195,25 +202,23 @@ brew_install bitwarden-cli
 
 brew_cask_install karabiner-elements
 brew_cask_install aquaskk
-brew_cask_install google-chrome
 brew_cask_install iterm2
 brew_cask_install visual-studio-code
-brew_cask_install notable
 brew_cask_install istat-menus
-brew_cask_install zoom
-brew_cask_install microsoft-office
-brew_cask_install google-backup-and-sync
-brew_cask_install virtualbox
 brew_cask_install the-unarchiver
-brew_cask_install slack
+brew_cask_install microsoft-office
+
+if [[ ! -d "/Applications/zoom.us.app" ]]; then
+  brew_cask_install zoom
+fi
+if [[ ! -d "/Applications/Google Chrome.app" ]]; then
+  brew_cask_install google-chrome
+fi
+if [[ ! -d "/Applications/Slack.app" ]]; then
+  brew_cask_install slack
+fi
 
 mas_install 539883307 # LINE
 
 # Fonts
 install_ricty
-
-# Copy dot-files
-cp -v -R dot-files/. $HOME
-
-[[ ! -f "$HOME/.bashrc_private" ]] && touch "$HOME/.bashrc_private"
-
