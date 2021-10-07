@@ -1,5 +1,10 @@
 #!/usr/bin/env bash -eux
 
+RUBY_VERSION="2.6.5"
+NODE_VERSION="12.2.0"
+JAVA_VERSION="openjdk-15.0.1"
+KOTLIN_VERSION="1.5.31"
+
 wait_process() {
   sleep 5
   while true; do
@@ -147,8 +152,10 @@ source ~/.bashrc
 # Ruby
 if [[ ! $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-  asdf install ruby 2.7.0
-  asdf global ruby 2.7.0
+fi
+if [[ ! $(asdf list ruby | grep "$RUBY_VERSION") ]]; then
+  asdf install ruby "$RUBY_VERSION"
+  asdf global ruby "$RUBY_VERSION"
 fi
 if [[ ! $(type bundler >/dev/null 2>&1) ]]; then
   gem install bundler
@@ -160,8 +167,10 @@ if [[ ! $(asdf plugin list | grep nodejs) ]]; then
   brew_install gpg
   brew_install coreutils
   bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-  asdf install nodejs 14.15.1
-  asdf global nodejs 14.15.1
+fi
+if [[ ! $(asdf list nodejs | grep "$NODE_VERSION") ]]; then
+  asdf install nodejs "$NODE_VERSION"
+  asdf global nodejs "$NODE_VERSION"
 fi
 
 # Uninstall default java8
@@ -178,15 +187,19 @@ fi
 # Java
 if [[ ! $(asdf plugin list | grep java) ]]; then
   asdf plugin-add java https://github.com/halcyon/asdf-java.git
-  asdf install java openjdk-15.0.1
-  asdf global java openjdk-15.0.1
+fi
+if [[ ! $(asdf list java | grep "$JAVA_VERSION") ]]; then
+  asdf install java "$JAVA_VERSION"
+  asdf global java "$JAVA_VERSION"
 fi
 
 # kotlin
 if [[ ! $(asdf plugin list | grep kotlin) ]]; then
   asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
-  asdf install kotlin 1.4.21
-  asdf global kotlin 1.4.21
+fi
+if [[ ! $(asdf list java | grep "$KOTLIN_VERSION") ]]; then
+  asdf install kotlin "$KOTLIN_VERSION"
+  asdf global kotlin "$KOTLIN_VERSION"
 fi
 
 # Android
