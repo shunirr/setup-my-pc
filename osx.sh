@@ -204,7 +204,8 @@ fi
 
 # Android
 brew_cask_install android-studio
-brew_install apktool bundletool
+brew_install apktool
+brew_install bundletool
 
 # Graph
 brew_install graphviz
