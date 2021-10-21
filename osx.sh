@@ -221,6 +221,7 @@ brew_cask_install visual-studio-code
 brew_cask_install istat-menus
 brew_cask_install the-unarchiver
 brew_cask_install microsoft-office
+brew_cask_install firefox
 
 if [[ ! -d "/Applications/zoom.us.app" ]]; then
   brew_cask_install zoom
