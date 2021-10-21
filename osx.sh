@@ -157,7 +157,7 @@ if [[ ! $(asdf list ruby | grep "$RUBY_VERSION") ]]; then
   asdf install ruby "$RUBY_VERSION"
   asdf global ruby "$RUBY_VERSION"
 fi
-if [[ ! $(type bundler >/dev/null 2>&1) ]]; then
+if [[ ! $(type bundle >/dev/null 2>&1) ]]; then
   gem install bundler
 fi
 
