@@ -2,7 +2,7 @@
 
 RUBY_VERSION="2.6.5"
 NODE_VERSION="12.2.0"
-JAVA_VERSION="openjdk-15.0.1"
+JAVA_VERSION="oracle-17.0.1"
 KOTLIN_VERSION="1.5.31"
 
 wait_process() {
