@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -eux
 
 RUBY_VERSION="2.6.5"
-NODE_VERSION="12.2.0"
+NODE_VERSION="16.8.0"
 JAVA_VERSION="oracle-17.0.1"
 KOTLIN_VERSION="1.5.31"
 
@@ -171,6 +171,9 @@ fi
 if [[ ! $(asdf list nodejs | grep "$NODE_VERSION") ]]; then
   asdf install nodejs "$NODE_VERSION"
   asdf global nodejs "$NODE_VERSION"
+fi
+if [[ ! $(type yarn >/dev/null 2>&1) ]]; then
+  npm install -g yarn
 fi
 
 # Uninstall default java8
