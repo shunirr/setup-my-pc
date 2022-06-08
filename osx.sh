@@ -96,11 +96,8 @@ join_wheel_group
 
 [[ ! -d ~/.ssh ]] && ssh_keygen
 
-UNAME="$(uname)"
-UNAME_MACHINE="$(uname -m)"
-
 # If AppleSilicon Mac
-if [ "$UNAME" = "Darwin" -a "$UNAME_MACHINE" = "arm64" ]; then
+if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
   # # Install Rosetta2
   # expect -c "
   # spawn softwareupdate --install-rosetta
@@ -230,6 +227,7 @@ brew_install apktool
 brew_install bundletool
 
 brew_cask_install intellij-idea
+brew_cask_install intellij-idea-ce
 
 # Graph
 brew_install graphviz
