@@ -10,4 +10,5 @@ shopt -s globstar
 shopt -s autocd
 
 # Android SDK
-export PATH=$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools:$PATH
+export ANDROID_SDK=$HOME/Library/Android/sdk
+export PATH=$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$ANDROID_SDK/build-tools/31.0.0:$PATH

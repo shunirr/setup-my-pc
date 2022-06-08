@@ -101,15 +101,16 @@ UNAME_MACHINE="$(uname -m)"
 
 # If AppleSilicon Mac
 if [ "$UNAME" = "Darwin" -a "$UNAME_MACHINE" = "arm64" ]; then
-  # Install Rosetta2
-  expect -c "
-  spawn softwareupdate --install-rosetta
-  expect :\ ; send A\n
-  expect eof exit 0
-  "
+  # # Install Rosetta2
+  # expect -c "
+  # spawn softwareupdate --install-rosetta
+  # expect :\ ; send A\n
+  # expect eof exit 0
+  # "
 
-  # Re-launch install script by x86_64
-  arch -arch x86_64 $0
+  # # Re-launch install script by x86_64
+  # arch -arch x86_64 $0
+  echo "Please implement scripts for M1 mac"
   exit 0
 fi
 
@@ -141,6 +142,7 @@ fi
 
 # asdf
 brew_install asdf
+asdf plugin update --all
 
 # Copy dot-files
 cp -v -R dot-files/. $HOME
@@ -215,10 +217,19 @@ if [[ -z $(asdf list kotlin | grep "$KOTLIN_VERSION") ]]; then
   asdf global kotlin "$KOTLIN_VERSION"
 fi
 
+# reshim
+if [[ -d "$HOME/.asdf/shims" ]]; then
+  rm -rf "$HOME/.asdf/shims"
+fi
+asdf reshim
+
+
 # Android
 brew_cask_install android-studio
 brew_install apktool
 brew_install bundletool
+
+brew_cask_install intellij-idea
 
 # Graph
 brew_install graphviz
@@ -236,6 +247,7 @@ brew_cask_install the-unarchiver
 brew_cask_install microsoft-office
 brew_cask_install firefox
 brew_cask_install charles
+brew_cask_install docker
 
 if [[ ! -d "/Applications/zoom.us.app" ]]; then
   brew_cask_install zoom
