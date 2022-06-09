@@ -4,7 +4,7 @@ RUBY_VERSION="2.6.5"
 NODE_VERSION="16.8.0"
 DENO_VERSION="1.19.2"
 JAVA_VERSION="adoptopenjdk-11.0.11+9"
-KOTLIN_VERSION="1.5.31"
+KOTLIN_VERSION="1.6.21"
 
 wait_process() {
   sleep 5
