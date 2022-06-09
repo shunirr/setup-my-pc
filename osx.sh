@@ -251,7 +251,6 @@ brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
-brew_cask_install "/Applications/Kindle.app" kindle
 brew_cask_install "/Applications/Google Drive.app" google-drive
 
 
