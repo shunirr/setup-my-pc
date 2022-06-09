@@ -66,13 +66,13 @@ homebrew_init() {
 }
 
 brew_install() {
-  if [[ ! -d /usr/local/Cellar/$1 ]]; then
+  if [[ ! -d $(brew --prefix)/Cellar/$1 ]]; then
     brew install $1
   fi
 }
 
 brew_cask_install() {
-  if [[ ! -d "$1" ]] && [[ ! -d /usr/local/Caskroom/$2 ]]; then
+  if [[ ! -d "$1" ]] && [[ ! -d $(brew --prefix)/Caskroom/$2 ]]; then
     brew install --cask $2
   fi
 }
@@ -87,7 +87,7 @@ install_ricty() {
   if [[ -z "$(ls ~/Library/Fonts/Ricty*.ttf)" ]]; then
     brew tap sanemat/font
     brew_install ricty
-    cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
+    cp -f $(brew --prefix)/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
     fc-cache -vf
   fi
 }
