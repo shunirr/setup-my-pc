@@ -53,6 +53,9 @@ install_command_line_developer_tools() {
 install_homebrew() {
   if [[ -z "$(brew --version)" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    if [[ $(uname) == "Darwin" ]] && [[ $(uname -m) == "arm64" ]]; then
+      eval $(/opt/homebrew/bin/brew shellenv)
+    fi
   fi
 }
 
@@ -69,8 +72,8 @@ brew_install() {
 }
 
 brew_cask_install() {
-  if [[ ! -d /usr/local/Caskroom/$1 ]]; then
-    brew install --cask $1
+  if [[ ! -d "$1" ]] && [[ ! -d /usr/local/Caskroom/$2 ]]; then
+    brew install --cask $2
   fi
 }
 
@@ -89,6 +92,17 @@ install_ricty() {
   fi
 }
 
+install_rosetta2() {
+  if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
+    # Install Rosetta2
+    expect -c "
+    spawn softwareupdate --install-rosetta
+    expect :\ ; send A\n
+    expect eof exit 0
+    "
+  fi
+}
+
 ########
 
 add_sudoers
@@ -96,20 +110,7 @@ join_wheel_group
 
 [[ ! -d ~/.ssh ]] && ssh_keygen
 
-# If AppleSilicon Mac
-if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
-  # # Install Rosetta2
-  # expect -c "
-  # spawn softwareupdate --install-rosetta
-  # expect :\ ; send A\n
-  # expect eof exit 0
-  # "
-
-  # # Re-launch install script by x86_64
-  # arch -arch x86_64 $0
-  echo "Please implement scripts for M1 mac"
-  exit 0
-fi
+install_rosetta2
 
 install_command_line_developer_tools
 
@@ -126,28 +127,28 @@ brew_install wget
 brew_install the_silver_searcher
 brew_install jq
 
+# Copy dot-files
+cp -v -R dot-files/. $HOME
+
 # Bash
 brew_install bash
 brew_install bash-completion
 
-if [[ -z "$(cat /etc/shells | grep /usr/local/bin/bash)" ]]; then
-  echo /usr/local/bin/bash | sudo tee -a /etc/shells
+if [[ -z "$(cat /etc/shells | grep $(which bash))" ]]; then
+  echo $(which bash) | sudo tee -a /etc/shells
 fi
-if [[ "$(dscl localhost -read Local/Default/Users/$USER UserShell | cut -d' ' -f2)" != "/usr/local/bin/bash" ]]; then
-  chsh -s /usr/local/bin/bash
+if [[ "$(dscl localhost -read Local/Default/Users/$USER UserShell | cut -d' ' -f2)" != "$(which bash)" ]]; then
+  chsh -s $(which bash)
 fi
-
-# asdf
-brew_install asdf
-asdf plugin update --all
-
-# Copy dot-files
-cp -v -R dot-files/. $HOME
 
 [[ ! -f "$HOME/.bashrc_private" ]] && touch "$HOME/.bashrc_private"
 
 # Load bashrc
 source ~/.bashrc
+
+# asdf
+brew_install asdf
+asdf plugin update --all
 
 # Ruby
 if [[ -z $(asdf plugin list | grep ruby) ]]; then
@@ -222,12 +223,12 @@ asdf reshim
 
 
 # Android
-brew_cask_install android-studio
+brew_cask_install "/Applications/Android Studio.app" android-studio
 brew_install apktool
 brew_install bundletool
 
-brew_cask_install intellij-idea
-brew_cask_install intellij-idea-ce
+brew_cask_install "/Applications/IntelliJ IDEA.app" intellij-idea
+brew_cask_install "/Applications/IntelliJ IDEA CE.app" intellij-idea-ce
 
 # Graph
 brew_install graphviz
@@ -236,26 +237,19 @@ brew_install plantuml
 # Other applications
 brew_install bitwarden-cli
 
-brew_cask_install karabiner-elements
-brew_cask_install aquaskk
-brew_cask_install iterm2
-brew_cask_install visual-studio-code
-brew_cask_install istat-menus
-brew_cask_install the-unarchiver
-brew_cask_install microsoft-office
-brew_cask_install firefox
-brew_cask_install charles
-brew_cask_install docker
-
-if [[ ! -d "/Applications/zoom.us.app" ]]; then
-  brew_cask_install zoom
-fi
-if [[ ! -d "/Applications/Google Chrome.app" ]]; then
-  brew_cask_install google-chrome
-fi
-if [[ ! -d "/Applications/Slack.app" ]]; then
-  brew_cask_install slack
-fi
+brew_cask_install "/Applications/Karabiner-Elements.app" karabiner-elements
+brew_cask_install "/Library/Input Methods/AquaSKK.app" aquaskk
+brew_cask_install "/Applications/iTerm.app" iterm2
+brew_cask_install "/Applications/Visual Studio Code.app" visual-studio-code
+brew_cask_install "/Applications/iStat Menus.app" istat-menus
+brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
+brew_cask_install "/Applications/Microsoft Word.app" microsoft-office
+brew_cask_install "/Applications/Firefox.app" firefox
+brew_cask_install "/Applications/Charles.app" charles
+brew_cask_install "/Applications/Docker.app" docker
+brew_cask_install "/Applications/zoom.us.app" zoom
+brew_cask_install "/Applications/Google Chrome.app" google-chrome
+brew_cask_install "/Applications/Slack.app" slack
 
 mas_install 539883307 # LINE
 

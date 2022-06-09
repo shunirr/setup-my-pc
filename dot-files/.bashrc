@@ -1,5 +1,5 @@
-source /usr/local/etc/bash_completion.d/git-prompt.sh
-source /usr/local/etc/bash_completion.d/git-completion.bash
+source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
+source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
 
 GIT_PS1_SHOWDIRTYSTATE=true
 export PS1='\[\e[0;36;44m\][\u@\h \w]$(__git_ps1)\$\[\033[00m\] '

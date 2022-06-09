@@ -1,11 +1,15 @@
+if [[ $(uname) == "Darwin" ]] && [[ $(uname -m) == "arm64" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
-if [ -f /usr/local/opt/asdf/asdf.sh ]; then
-  . /usr/local/opt/asdf/asdf.sh
+if [ -f $(brew --prefix)/opt/asdf/asdf.sh ]; then
+  . $(brew --prefix)/opt/asdf/asdf.sh
 fi
-if [ -f /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash ]; then
-  . /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+if [ -f $(brew --prefix)/opt/asdf/etc/bash_completion.d/asdf.bash ]; then
+  . $(brew --prefix)/opt/asdf/etc/bash_completion.d/asdf.bash
 fi
 if [ -f $HOME/.asdf/plugins/java/set-java-home.bash ]; then
   . $HOME/.asdf/plugins/java/set-java-home.bash
