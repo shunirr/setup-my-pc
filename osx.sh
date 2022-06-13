@@ -94,12 +94,7 @@ install_ricty() {
 
 install_rosetta2() {
   if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
-    # Install Rosetta2
-    expect -c "
-    spawn softwareupdate --install-rosetta
-    expect :\ ; send A\n
-    expect eof exit 0
-    "
+    softwareupdate --install-rosetta --agree-to-license
   fi
 }
 
