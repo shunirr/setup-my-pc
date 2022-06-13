@@ -216,7 +216,6 @@ if [[ -d "$HOME/.asdf/shims" ]]; then
 fi
 asdf reshim
 
-
 # Android
 brew_cask_install "/Applications/Android Studio.app" android-studio
 brew_install apktool
@@ -247,9 +246,12 @@ brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
 brew_cask_install "/Applications/Google Drive.app" google-drive
-
+brew_cask_install "/Applications/Flipper.app" flipper
 
 mas_install 539883307 # LINE
 
 # Fonts
 install_ricty
+
+# Upgrade all casks
+brew upgrade --cask --greedy
