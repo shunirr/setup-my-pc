@@ -255,3 +255,6 @@ install_ricty
 
 # Upgrade all casks
 brew upgrade --cask --greedy
+
+# Upgarde all apps that managed MacAppStore
+mas upgrade
