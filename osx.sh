@@ -236,19 +236,19 @@ brew_cask_install "/Library/Input Methods/AquaSKK.app" aquaskk
 brew_cask_install "/Applications/iTerm.app" iterm2
 brew_cask_install "/Applications/Visual Studio Code.app" visual-studio-code
 brew_cask_install "/Applications/iStat Menus.app" istat-menus
-brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
 brew_cask_install "/Applications/Microsoft Word.app" microsoft-office
 brew_cask_install "/Applications/Firefox.app" firefox
 brew_cask_install "/Applications/Charles.app" charles
 brew_cask_install "/Applications/Docker.app" docker
 brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
-brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
 brew_cask_install "/Applications/Google Drive.app" google-drive
 brew_cask_install "/Applications/Flipper.app" flipper
 
 mas_install 539883307 # LINE
+mas_install 803453959 # Slack
+mas_install 425424353 # The Unarchiver
 
 # Fonts
 install_ricty
