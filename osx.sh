@@ -73,7 +73,9 @@ brew_install() {
 
 brew_cask_install() {
   if [[ ! -d "$1" ]] && [[ ! -d $(brew --prefix)/Caskroom/$2 ]]; then
+    set +e
     brew install --cask $2
+    set -e
   fi
 }
 
