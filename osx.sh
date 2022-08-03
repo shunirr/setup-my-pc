@@ -3,7 +3,7 @@
 RUBY_VERSION="2.6.5"
 NODE_VERSION="16.8.0"
 DENO_VERSION="1.19.2"
-JAVA_VERSION="adoptopenjdk-11.0.11+9"
+JAVA_VERSION="adoptopenjdk-jre-11.0.16+8"
 KOTLIN_VERSION="1.6.21"
 
 wait_process() {
@@ -152,6 +152,9 @@ if [[ -z $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 fi
 if [[ -z $(asdf list ruby | grep "$RUBY_VERSION") ]]; then
+  if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
+    export RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC
+  fi
   asdf install ruby "$RUBY_VERSION"
   asdf global ruby "$RUBY_VERSION"
 fi
