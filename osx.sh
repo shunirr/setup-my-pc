@@ -123,6 +123,7 @@ brew_install tmux
 brew_install wget
 brew_install the_silver_searcher
 brew_install jq
+brew_install ccache
 
 # Copy dot-files
 cp -v -R dot-files/. $HOME
@@ -226,7 +227,6 @@ brew_cask_install "/Applications/Android Studio.app" android-studio
 brew_install apktool
 brew_install bundletool
 
-brew_cask_install "/Applications/IntelliJ IDEA.app" intellij-idea
 brew_cask_install "/Applications/IntelliJ IDEA CE.app" intellij-idea-ce
 
 # Graph
