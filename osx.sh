@@ -124,6 +124,8 @@ brew_install wget
 brew_install the_silver_searcher
 brew_install jq
 brew_install ccache
+brew_install cmake
+brew_install pkg-config
 
 # Copy dot-files
 cp -v -R dot-files/. $HOME
@@ -259,7 +261,7 @@ mas_install 425424353 # The Unarchiver
 install_ricty
 
 # Upgrade all casks
-brew upgrade --cask --greedy
+brew upgrade --cask --greedy -f
 
 # Upgarde all apps that managed MacAppStore
 mas upgrade
