@@ -3,7 +3,7 @@
 RUBY_VERSION="2.6.9"
 NODE_VERSION="16.8.0"
 DENO_VERSION="1.19.2"
-JAVA_VERSION="adoptopenjdk-jre-11.0.16+8"
+JAVA_VERSION="adoptopenjdk-11.0.16+101"
 KOTLIN_VERSION="1.6.21"
 
 wait_process() {
