@@ -2,7 +2,6 @@
 
 RUBY_VERSION="2.6.9"
 NODE_VERSION="16.8.0"
-DENO_VERSION="1.19.2"
 JAVA_VERSION="adoptopenjdk-11.0.16+101"
 KOTLIN_VERSION="1.6.21"
 
@@ -178,15 +177,6 @@ if [[ -z $(asdf list nodejs | grep "$NODE_VERSION") ]]; then
 fi
 if [[ -z $(type yarn >/dev/null 2>&1 && echo "Installed") ]]; then
   npm install -g yarn
-fi
-
-# Deno
-if [[ -z $(asdf plugin list | grep deno) ]]; then
-  asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git
-fi
-if [[ -z $(asdf list deno | grep "$DENO_VERSION") ]]; then
-  asdf install deno "$DENO_VERSION"
-  asdf global deno "$DENO_VERSION"
 fi
 
 # Uninstall default java8
