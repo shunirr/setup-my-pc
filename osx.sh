@@ -4,6 +4,7 @@ RUBY_VERSION="2.6.9"
 NODE_VERSION="16.8.0"
 JAVA_VERSION="adoptopenjdk-11.0.16+101"
 KOTLIN_VERSION="1.6.21"
+GOLANG_VERSION="1.19.4"
 
 wait_process() {
   sleep 5
@@ -208,6 +209,15 @@ fi
 if [[ -z $(asdf list kotlin | grep "$KOTLIN_VERSION") ]]; then
   asdf install kotlin "$KOTLIN_VERSION"
   asdf global kotlin "$KOTLIN_VERSION"
+fi
+
+# golang
+if [[ -z $(asdf plugin list | grep golang) ]]; then
+  asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
+fi
+if [[ -z $(asdf list golang | grep "$GOLANG_VERSION") ]]; then
+  asdf install golang "$GOLANG_VERSION"
+  asdf global golang "$GOLANG_VERSION"
 fi
 
 # reshim
