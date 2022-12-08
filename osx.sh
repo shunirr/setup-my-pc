@@ -160,6 +160,8 @@ if [[ -z $(asdf list ruby | grep "$RUBY_VERSION") ]]; then
   asdf install ruby "$RUBY_VERSION"
   asdf global ruby "$RUBY_VERSION"
 fi
+
+softwareupdate --all --install --force
 if [[ -z $(type bundle >/dev/null 2>&1 && echo "Installed") ]]; then
   gem install bundler
 fi
@@ -230,6 +232,7 @@ brew_install bitwarden-cli
 
 brew_cask_install "/Applications/Karabiner-Elements.app" karabiner-elements
 brew_cask_install "/Library/Input Methods/AquaSKK.app" aquaskk
+brew_cask_install "/Applications/WezTerm.app" wezterm
 brew_cask_install "/Applications/iTerm.app" iterm2
 brew_cask_install "/Applications/Visual Studio Code.app" visual-studio-code
 brew_cask_install "/Applications/iStat Menus.app" istat-menus
@@ -254,3 +257,6 @@ brew upgrade --cask --greedy -f
 
 # Upgarde all apps that managed MacAppStore
 mas upgrade
+
+# Upgrade macOs
+# softwareupdate --all --install --force
