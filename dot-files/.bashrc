@@ -2,7 +2,7 @@ source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
 source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
 
 GIT_PS1_SHOWDIRTYSTATE=true
-export PS1='\[\e[0;36;44m\][\u@\h \w]$(__git_ps1)\$\[\033[00m\] '
+export PS1='[\u@\h \w]$(__git_ps1) '
 export LSCOLORS=gxfxcxdxbxegedabagacad
 alias ls="ls -F -G"
 
