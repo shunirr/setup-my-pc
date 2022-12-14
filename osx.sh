@@ -264,6 +264,7 @@ brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
 brew_cask_install "/Applications/Google Drive.app" google-drive
 brew_cask_install "/Applications/Flipper.app" flipper
+brew_cask_install "/Applications/Processing.app" processing
 
 mas_install 539883307 # LINE
 mas_install 803453959 # Slack
