@@ -265,6 +265,7 @@ brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Clo
 brew_cask_install "/Applications/Google Drive.app" google-drive
 brew_cask_install "/Applications/Flipper.app" flipper
 brew_cask_install "/Applications/Processing.app" processing
+brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
 
 mas_install 539883307 # LINE
 mas_install 803453959 # Slack
