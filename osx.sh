@@ -21,13 +21,9 @@ wait_process() {
 }
 
 ssh_keygen() {
-  expect -c "
-  spawn ssh-keygen
-  expect :\ ; send \n
-  expect :\ ; send \n
-  expect :\ ; send \n
-  expect eof exit 0
-  "
+  if [[ ! -f ~/.ssh/id_rsa ]];
+    ssh-keygen -N ""
+  fi
 }
 
 add_sudoers() {
