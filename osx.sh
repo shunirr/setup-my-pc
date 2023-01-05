@@ -21,7 +21,7 @@ wait_process() {
 }
 
 ssh_keygen() {
-  if [[ ! -f ~/.ssh/id_rsa ]];
+  if [[ ! -f ~/.ssh/id_rsa ]]; then
     ssh-keygen -N ""
   fi
 }
@@ -269,6 +269,7 @@ brew_cask_install "/Applications/Flipper.app" flipper
 brew_cask_install "/Applications/Processing.app" processing
 brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
 brew_cask_install "/Applications/Docker.app" docker
+brew_cask_install "/Applications/Raspberry Pi Imager.app" raspberry-pi-imager
 
 if [[ $# -gt 0 && "$1" == "p" ]]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
