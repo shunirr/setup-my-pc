@@ -270,6 +270,7 @@ brew_cask_install "/Applications/Processing.app" processing
 brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
 brew_cask_install "/Applications/Docker.app" docker
 brew_cask_install "/Applications/Raspberry Pi Imager.app" raspberry-pi-imager
+brew_cask_install "/Applications/Arduino IDE.app" arduino-ide
 
 if [[ $# -gt 0 && "$1" == "p" ]]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
