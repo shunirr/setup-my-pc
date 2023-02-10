@@ -247,6 +247,10 @@ brew_cask_install "/Applications/IntelliJ IDEA CE.app" intellij-idea-ce
 brew_install graphviz
 brew_install plantuml
 
+# Terraform
+brew_install awscli
+brew_install tfenv
+
 # Other applications
 brew_install bitwarden-cli
 
@@ -266,6 +270,7 @@ brew_cask_install "/Applications/Google Drive.app" google-drive
 brew_cask_install "/Applications/Flipper.app" flipper
 brew_cask_install "/Applications/Processing.app" processing
 brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
+brew_cask_install "/Applications/Docker.app" docker
 
 mas_install 539883307 # LINE
 mas_install 803453959 # Slack
