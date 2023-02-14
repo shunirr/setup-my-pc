@@ -86,12 +86,11 @@ mas_install() {
   fi
 }
 
-install_ricty() {
-  if [[ -z "$(ls ~/Library/Fonts/Ricty*.ttf)" ]]; then
-    brew tap sanemat/font
-    brew_install ricty
-    cp -f $(brew --prefix)/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
-    fc-cache -vf
+install_hackgen() {
+  if [[ -z "$(ls ~/Library/Fonts/HackGen*.ttf)" ]]; then
+    brew tap homebrew/cask-fonts
+    brew_install font-hackgen
+    brew_install font-hackgen-nerd
   fi
 }
 
@@ -277,7 +276,7 @@ mas_install 803453959 # Slack
 mas_install 425424353 # The Unarchiver
 
 # Fonts
-install_ricty
+install_hackgen
 
 # Upgrade all casks
 brew upgrade --cask --greedy -f
