@@ -261,24 +261,22 @@ brew_cask_install "/Applications/WezTerm.app" wezterm
 brew_cask_install "/Applications/Visual Studio Code.app" visual-studio-code
 brew_cask_install "/Applications/iStat Menus.app" istat-menus
 brew_cask_install "/Applications/Microsoft Word.app" microsoft-office
-brew_cask_install "/Applications/Firefox.app" firefox
 brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
-brew_cask_install "/Applications/Google Drive.app" google-drive
-brew_cask_install "/Applications/Flipper.app" flipper
-brew_cask_install "/Applications/Processing.app" processing
-brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
 brew_cask_install "/Applications/Docker.app" docker
-brew_cask_install "/Applications/Raspberry Pi Imager.app" raspberry-pi-imager
-brew_cask_install "/Applications/Arduino IDE.app" arduino-ide
 
 if [[ $# -gt 0 && "$1" == "p" ]]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
   brew_cask_install "/Applications/Processing.app" processing
+  brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
   brew_cask_install "/Applications/Eclipse JEE.app" eclipse-jee
+  brew_cask_install "/Applications/Raspberry Pi Imager.app" raspberry-pi-imager
+  brew_cask_install "/Applications/Arduino IDE.app" arduino-ide
+  brew_cask_install "/Applications/Google Drive.app" google-drive
 fi
 if [[ $# -gt 0 && "$1" == "w" ]]; then
-  : # nop
+  brew_cask_install "/Applications/Firefox.app" firefox
+  brew_cask_install "/Applications/Flipper.app" flipper
 fi
 
 mas_install 539883307 # LINE
