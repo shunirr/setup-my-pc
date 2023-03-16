@@ -250,6 +250,10 @@ brew_install plantuml
 brew_install awscli
 brew_install tfenv
 
+# Flutter
+brew_install flutter
+flutter doctor
+
 # Other applications
 brew_install bitwarden-cli
 
