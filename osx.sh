@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -eux
 
-RUBY_VERSION="2.6.9"
+RUBY_VERSION="2.7.6"
 NODE_VERSION="16.8.0"
 DENO_VERSION="1.28.3"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
