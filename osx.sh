@@ -248,6 +248,7 @@ brew_install awscli
 brew_install tfenv
 
 # Flutter
+brew_install cocoapods
 brew_install flutter
 flutter doctor
 

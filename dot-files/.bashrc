@@ -11,4 +11,5 @@ shopt -s autocd
 
 # Android SDK
 export ANDROID_SDK=$HOME/Library/Android/sdk
-export PATH=$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$ANDROID_SDK/build-tools/31.0.0:$PATH
+BUILD_TOOLS_VERSION="$(ls -1 $ANDROID_SDK/build-tools/ | sort -hr | head -1)"
+export PATH=$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/platform-tools:$ANDROID_SDK/build-tools/$BUILD_TOOLS_VERSION:$PATH
