@@ -13,3 +13,6 @@ shopt -s autocd
 export ANDROID_SDK=$HOME/Library/Android/sdk
 BUILD_TOOLS_VERSION="$(ls -1 $ANDROID_SDK/build-tools/ | sort -hr | head -1)"
 export PATH=$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/platform-tools:$ANDROID_SDK/build-tools/$BUILD_TOOLS_VERSION:$PATH
+
+# Flutter SDK
+export FLUTTER_ROOT="$(asdf where flutter)"

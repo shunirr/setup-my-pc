@@ -6,6 +6,7 @@ DENO_VERSION="1.28.3"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.6.21"
 GOLANG_VERSION="1.19.4"
+FLUTTER_VERSION="3.3.6"
 
 wait_process() {
   sleep 5
@@ -207,7 +208,7 @@ if [[ -z $(asdf list java | grep "$JAVA_VERSION") ]]; then
   asdf global java "$JAVA_VERSION"
 fi
 
-# kotlin
+# Kotlin
 if [[ -z $(asdf plugin list | grep kotlin) ]]; then
   asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
 fi
@@ -216,7 +217,7 @@ if [[ -z $(asdf list kotlin | grep "$KOTLIN_VERSION") ]]; then
   asdf global kotlin "$KOTLIN_VERSION"
 fi
 
-# golang
+# Golang
 if [[ -z $(asdf plugin list | grep golang) ]]; then
   asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
 fi
@@ -224,6 +225,18 @@ if [[ -z $(asdf list golang | grep "$GOLANG_VERSION") ]]; then
   asdf install golang "$GOLANG_VERSION"
   asdf global golang "$GOLANG_VERSION"
 fi
+
+# Flutter
+if [[ -z $(asdf plugin list | grep flutter) ]]; then
+  asdf plugin-add flutter
+fi
+if [[ -z $(asdf list flutter | grep "$FLUTTER_VERSION") ]]; then
+  asdf install flutter "$FLUTTER_VERSION"
+  asdf global flutter "$FLUTTER_VERSION"
+fi
+
+brew_install cocoapods
+flutter doctor
 
 # reshim
 if [[ -d "$HOME/.asdf/shims" ]]; then
@@ -247,14 +260,8 @@ brew_install plantuml
 brew_install awscli
 brew_install tfenv
 
-# Flutter
-brew_install cocoapods
-brew_install flutter
-flutter doctor
-
 # Other applications
 brew_install bitwarden-cli
-brew_install trex
 
 brew_cask_install "/Applications/Karabiner-Elements.app" karabiner-elements
 brew_cask_install "/Library/Input Methods/AquaSKK.app" aquaskk
@@ -265,6 +272,8 @@ brew_cask_install "/Applications/Microsoft Word.app" microsoft-office
 brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Docker.app" docker
+brew_cask_install "/Applications/Slack.app" slack
+brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
 
 if [[ $# -gt 0 && "$1" == "p" ]]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
@@ -277,12 +286,9 @@ if [[ $# -gt 0 && "$1" == "p" ]]; then
 fi
 if [[ $# -gt 0 && "$1" == "w" ]]; then
   brew_cask_install "/Applications/Firefox.app" firefox
-  brew_cask_install "/Applications/Flipper.app" flipper
 fi
 
 mas_install 539883307 # LINE
-mas_install 803453959 # Slack
-mas_install 425424353 # The Unarchiver
 
 # Fonts
 install_hackgen
