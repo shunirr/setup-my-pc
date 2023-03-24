@@ -63,12 +63,6 @@ homebrew_init() {
   brew upgrade
 }
 
-brew_install_from_source() {
-  if [[ ! -d $(brew --prefix)/Cellar/$1 ]]; then
-    brew install -s $1
-  fi
-}
-
 brew_install() {
   if [[ ! -d $(brew --prefix)/Cellar/$1 ]]; then
     brew install $1
@@ -154,8 +148,9 @@ brew_install asdf
 asdf plugin update --all
 
 # Ruby
-brew_install_from_source openssl
-brew_install_from_source readline
+brew_install openssl@3
+brew_install openssl@1.1
+brew_install readline
 if [[ -z $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 fi
