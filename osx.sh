@@ -148,6 +148,8 @@ brew_install asdf
 asdf plugin update --all
 
 # Ruby
+brew_install openssl
+brew_install readline
 if [[ -z $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 fi
