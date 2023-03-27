@@ -22,8 +22,12 @@ wait_process() {
 }
 
 ssh_keygen() {
-  if [[ ! -f ~/.ssh/id_rsa ]]; then
-    ssh-keygen -N ""
+  SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
+  if [ $# -eq 1 ]; then
+    SSH_KEY_PATH="${SSH_KEY_PATH}_${1}"
+  fi
+  if [[ ! -f "$SSH_KEY_PATH" ]]; then
+    ssh-keygen -f "$SSH_KEY_PATH" -N "" -t ed25519
   fi
 }
 
@@ -102,7 +106,7 @@ install_rosetta2() {
 add_sudoers
 join_wheel_group
 
-[[ ! -d ~/.ssh ]] && ssh_keygen
+ssh_keygen
 
 install_rosetta2
 
@@ -289,6 +293,7 @@ if [[ $# -gt 0 && "$1" == "p" ]]; then
 fi
 if [[ $# -gt 0 && "$1" == "w" ]]; then
   brew_cask_install "/Applications/Firefox.app" firefox
+  ssh_keygen "w"
 fi
 
 mas_install 539883307 # LINE
