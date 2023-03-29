@@ -2,11 +2,9 @@
 
 RUBY_VERSION="2.7.6"
 NODE_VERSION="16.8.0"
-DENO_VERSION="1.28.3"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.6.21"
 GOLANG_VERSION="1.19.4"
-DART_VERSION="2.19.5"
 
 wait_process() {
   sleep 5
@@ -186,15 +184,6 @@ if [[ -z $(type yarn >/dev/null 2>&1 && echo "Installed") ]]; then
   npm install -g yarn
 fi
 
-# Deno
-if [[ -z $(asdf plugin list | grep deno) ]]; then
-  asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git
-fi
-if [[ -z $(asdf list deno | grep "$DENO_VERSION") ]]; then
-  asdf install deno "$DENO_VERSION"
-  asdf global deno "$DENO_VERSION"
-fi
-
 # Uninstall default java8
 if [[ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]]; then
   sudo rm -fr "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
@@ -233,15 +222,6 @@ if [[ -z $(asdf list golang | grep "$GOLANG_VERSION") ]]; then
   asdf global golang "$GOLANG_VERSION"
 fi
 
-# Dart
-if [[ -z $(asdf plugin list | grep dart) ]]; then
-  asdf plugin-add dart https://github.com/patoconnor43/asdf-dart.git
-fi
-if [[ -z $(asdf list dart | grep "$DART_VERSION") ]]; then
-  asdf install dart "$DART_VERSION"
-  asdf global dart "$DART_VERSION"
-fi
-
 # reshim
 if [[ -d "$HOME/.asdf/shims" ]]; then
   rm -rf "$HOME/.asdf/shims"
@@ -249,12 +229,10 @@ fi
 asdf reshim
 
 # Flutter
+brew tap dart-lang/dart
+brew_install dart
 brew_install cocoapods
 dart pub global activate fvm
-fvm install stable
-fvm global stable
-fvm flutter --version
-fvm flutter doctor
 
 # Android
 brew_cask_install "/Applications/Android Studio.app" android-studio
