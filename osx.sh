@@ -6,7 +6,7 @@ DENO_VERSION="1.28.3"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.6.21"
 GOLANG_VERSION="1.19.4"
-FLUTTER_VERSION="3.3.6"
+DART_VERSION="2.19.5"
 
 wait_process() {
   sleep 5
@@ -166,7 +166,7 @@ if [[ -z $(asdf list ruby | grep "$RUBY_VERSION") ]]; then
   asdf global ruby "$RUBY_VERSION"
 fi
 
-softwareupdate --all --install --force
+# softwareupdate --all --install --force
 if [[ -z $(type bundle >/dev/null 2>&1 && echo "Installed") ]]; then
   gem install bundler
 fi
@@ -233,23 +233,28 @@ if [[ -z $(asdf list golang | grep "$GOLANG_VERSION") ]]; then
   asdf global golang "$GOLANG_VERSION"
 fi
 
-# Flutter
-if [[ -z $(asdf plugin list | grep flutter) ]]; then
-  asdf plugin-add flutter
+# Dart
+if [[ -z $(asdf plugin list | grep dart) ]]; then
+  asdf plugin-add dart https://github.com/patoconnor43/asdf-dart.git
 fi
-if [[ -z $(asdf list flutter | grep "$FLUTTER_VERSION") ]]; then
-  asdf install flutter "$FLUTTER_VERSION"
-  asdf global flutter "$FLUTTER_VERSION"
+if [[ -z $(asdf list dart | grep "$DART_VERSION") ]]; then
+  asdf install dart "$DART_VERSION"
+  asdf global dart "$DART_VERSION"
 fi
-
-brew_install cocoapods
-flutter doctor
 
 # reshim
 if [[ -d "$HOME/.asdf/shims" ]]; then
   rm -rf "$HOME/.asdf/shims"
 fi
 asdf reshim
+
+# Flutter
+brew_install cocoapods
+dart pub global activate fvm
+fvm install stable
+fvm global stable
+fvm flutter --version
+fvm flutter doctor
 
 # Android
 brew_cask_install "/Applications/Android Studio.app" android-studio

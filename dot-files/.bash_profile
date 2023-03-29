@@ -30,9 +30,5 @@ export LC_NUMERIC="ja_JP.UTF-8"
 export LC_TIME="ja_JP.UTF-8"
 export LC_ALL=
 
-if [ -n "$(brew --prefix openssl)" ]; then
-  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=\"$(brew --prefix openssl@1.1)\" --with-readline-dir=\"$(brew --prefix readline)\""
-fi
-
 source ~/.bashrc
 
