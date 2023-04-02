@@ -1,10 +1,10 @@
 #!/usr/bin/env bash -eux
 
-RUBY_VERSION="2.7.6"
-NODE_VERSION="16.8.0"
+RUBY_VERSION="3.2.1"
+NODE_VERSION="18.15.0"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
-KOTLIN_VERSION="1.6.21"
-GOLANG_VERSION="1.19.4"
+KOTLIN_VERSION="1.8.10"
+GOLANG_VERSION="1.20.2"
 
 wait_process() {
   sleep 5
@@ -150,9 +150,6 @@ brew_install asdf
 asdf plugin update --all
 
 # Ruby
-brew_install openssl@3
-brew_install openssl@1.1
-brew_install readline
 if [[ -z $(asdf plugin list | grep ruby) ]]; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 fi
