@@ -1,4 +1,5 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash
+set -euxo pipefail
 
 RUBY_VERSION="3.2.1"
 NODE_VERSION="18.15.0"
@@ -10,51 +11,49 @@ wait_process() {
   sleep 5
   while true; do
     sleep 1
-    set +e
-    pgrep "$1" >/dev/null 2>&1
-    if [[ $? != 0 ]]; then
+    if ! pgrep "$1"; then
       break
     fi
-    set -e
   done
 }
 
 ssh_keygen() {
   SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
   if [ $# -eq 1 ]; then
-    SSH_KEY_PATH="${SSH_KEY_PATH}_${1}"
+    SSH_KEY_PATH="${SSH_KEY_PATH}_$1"
   fi
-  if [[ ! -f "$SSH_KEY_PATH" ]]; then
+  if [ ! -f "$SSH_KEY_PATH" ]; then
     ssh-keygen -f "$SSH_KEY_PATH" -N "" -t ed25519
   fi
 }
 
 add_sudoers() {
-  local ENTRY='%wheel ALL=(ALL) NOPASSWD: ALL'
-  if [[ -z "$(sudo cat /etc/sudoers | grep "${ENTRY}")" ]]; then
-    sudo sh -c "echo '${ENTRY}' >> /etc/sudoers"
+  if [ ! -d "/etc/sudoers.d" ] || [ ! -f "/etc/sudoers.d/config" ]; then
+    sudo mkdir -p /etc/sudoers.d
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/config
+    sudo chmod 440 /etc/sudoers.d/*
   fi
 }
 
 join_wheel_group() {
-  local USERNAME=$(who am i | cut -d" " -f1)
-  if [[ -z "$(dscl . -read /Groups/wheel | grep ${USERNAME})" ]]; then
-    sudo dscl . -append /Groups/wheel GroupMembership ${USERNAME}
+  USERNAME="$(who am i | cut -d" " -f1)"
+  if ! dscl . -read /Groups/wheel | grep -q "$USERNAME"; then
+    sudo dscl . -append /Groups/wheel GroupMembership "$USERNAME"
   fi
 }
 
 install_command_line_developer_tools() {
-  if [[ ! -d "/Library/Developer/CommandLineTools" ]]; then
-    sh -c "xcode-select --install"
+  if [ ! -d "/Library/Developer/CommandLineTools" ]; then
+    /bin/bash -c "xcode-select --install" &
     wait_process "Command Line Developer Tools"
   fi
 }
 
 install_homebrew() {
-  if [[ -z "$(brew --version)" ]]; then
+  if ! type brew; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    if [[ $(uname) == "Darwin" ]] && [[ $(uname -m) == "arm64" ]]; then
-      eval $(/opt/homebrew/bin/brew shellenv)
+    if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
   fi
 }
@@ -66,27 +65,27 @@ homebrew_init() {
 }
 
 brew_install() {
-  if [[ ! -d $(brew --prefix)/Cellar/$1 ]]; then
-    brew install $1
+  if [ ! -d "$(brew --prefix)/Cellar/$1" ]; then
+    brew install "$1"
   fi
 }
 
 brew_cask_install() {
-  if [[ ! -d "$1" ]] && [[ ! -d $(brew --prefix)/Caskroom/$2 ]]; then
+  if [ ! -d "$1" ] && [ ! -d "$(brew --prefix)/Caskroom/$2" ]; then
     set +e
-    brew install --cask $2
+    brew install --cask "$2"
     set -e
   fi
 }
 
 mas_install() {
-  if [[ -z "$(mas list | grep $1)" ]]; then
-    mas install $1
+  if ! mas list | grep -q "$1"; then
+    mas install "$1"
   fi
 }
 
 install_hackgen() {
-  if [[ -z "$(ls ~/Library/Fonts/HackGen*.ttf)" ]]; then
+  if [ -z "$(find "$HOME/Library/Fonts" -name 'HackGen*.ttf')" ]; then
     brew tap homebrew/cask-fonts
     brew_install font-hackgen
     brew_install font-hackgen-nerd
@@ -94,12 +93,21 @@ install_hackgen() {
 }
 
 install_rosetta2() {
-  if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
+  if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
     softwareupdate --install-rosetta --agree-to-license
   fi
 }
 
 ########
+
+if [ $# -eq 1 ] && [ "$1" = "p" ]; then
+  IS_PERSONAL=true
+elif [ $# -eq 1 ] && [ "$1" = "w" ]; then
+  IS_PERSONAL=false
+else
+  echo "Invalid argument: Please set p or w"
+  exit 1
+fi
 
 add_sudoers
 join_wheel_group
@@ -117,6 +125,12 @@ brew_install mas
 mas_install 497799835 # Xcode
 sudo xcodebuild -license accept
 
+brew_install shellcheck
+if ! shellcheck "$0"; then
+  echo "Please fix shellcheck's problems"
+  exit 1
+fi
+
 brew_install git
 brew_install tmux
 brew_install wget
@@ -127,100 +141,102 @@ brew_install cmake
 brew_install pkg-config
 
 # Copy dot-files
-cp -v -R dot-files/. $HOME
+cp -v -R dot-files/. "$HOME"
 
 # Bash
 brew_install bash
 brew_install bash-completion
 
-if [[ -z "$(cat /etc/shells | grep $(which bash))" ]]; then
-  echo $(which bash) | sudo tee -a /etc/shells
+if ! grep <"/etc/shells" -q "$(which bash)"; then
+  which bash | sudo tee -a /etc/shells
 fi
-if [[ "$(dscl localhost -read Local/Default/Users/$USER UserShell | cut -d' ' -f2)" != "$(which bash)" ]]; then
-  chsh -s $(which bash)
+if [ "$(dscl localhost -read "Local/Default/Users/$USER" UserShell | cut -d' ' -f2)" != "$(which bash)" ]; then
+  chsh -s "$(which bash)"
 fi
 
-[[ ! -f "$HOME/.bashrc_private" ]] && touch "$HOME/.bashrc_private"
+if [ ! -f "$HOME/.bashrc_private" ]; then
+  touch "$HOME/.bashrc_private"
+fi
 
 # Load bashrc
-source ~/.bashrc
+# shellcheck disable=SC1091
+source "$HOME/.bashrc"
 
 # asdf
 brew_install asdf
 asdf plugin update --all
 
 # Ruby
-if [[ -z $(asdf plugin list | grep ruby) ]]; then
+if ! asdf plugin list | grep -q ruby; then
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 fi
-if [[ -z $(asdf list ruby | grep "$RUBY_VERSION") ]]; then
-  if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
+if ! asdf list ruby | grep -q "$RUBY_VERSION"; then
+  if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
     export RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC
   fi
   asdf install ruby "$RUBY_VERSION"
-  asdf global ruby "$RUBY_VERSION"
 fi
+asdf global ruby "$RUBY_VERSION"
 
-# softwareupdate --all --install --force
-if [[ -z $(type bundle >/dev/null 2>&1 && echo "Installed") ]]; then
+if ! which bundle | grep -q "asdf"; then
   gem install bundler
 fi
 
 # Nodejs
-if [[ -z $(asdf plugin list | grep nodejs) ]]; then
+if ! asdf plugin list | grep -q nodejs; then
   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
   brew_install gpg
   brew_install coreutils
   bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 fi
-if [[ -z $(asdf list nodejs | grep "$NODE_VERSION") ]]; then
+if ! asdf list nodejs | grep -q "$NODE_VERSION"; then
   asdf install nodejs "$NODE_VERSION"
-  asdf global nodejs "$NODE_VERSION"
 fi
-if [[ -z $(type yarn >/dev/null 2>&1 && echo "Installed") ]]; then
+asdf global nodejs "$NODE_VERSION"
+if ! which yarn | grep -q "asdf"; then
   npm install -g yarn
 fi
 
 # Uninstall default java8
-if [[ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]]; then
-  sudo rm -fr "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
+if [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]; then
+  sudo rm -rf "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
 fi
-if [[ -d "/Library/PreferencesPanes/JavaControlPanel.prefPane" ]]; then
-  sudo rm -fr "/Library/PreferencesPanes/JavaControlPanel.prefPane"
+if [ -d "/Library/PreferencesPanes/JavaControlPanel.prefPane" ]; then
+  sudo rm -rf "/Library/PreferencesPanes/JavaControlPanel.prefPane"
 fi
-if [[ -d "$HOME/Library/Application Support/Java" ]]; then
-  sudo rm -fr "$HOME/Library/Application Support/Java"
+if [ -d "$HOME/Library/Application Support/Java" ]; then
+  sudo rm -rf "$HOME/Library/Application Support/Java"
 fi
 
 # Java
-if [[ -z $(asdf plugin list | grep java) ]]; then
+if ! asdf plugin list | grep -q java; then
   asdf plugin-add java https://github.com/halcyon/asdf-java.git
 fi
-if [[ -z $(asdf list java | grep "$JAVA_VERSION") ]]; then
+if ! asdf list java | grep -q "$JAVA_VERSION"; then
   asdf install java "$JAVA_VERSION"
-  asdf global java "$JAVA_VERSION"
 fi
+asdf global java "$JAVA_VERSION"
 
 # Kotlin
-if [[ -z $(asdf plugin list | grep kotlin) ]]; then
+if ! asdf plugin list | grep -q kotlin; then
   asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
 fi
-if [[ -z $(asdf list kotlin | grep "$KOTLIN_VERSION") ]]; then
+if ! asdf list kotlin | grep -q "$KOTLIN_VERSION"; then
   asdf install kotlin "$KOTLIN_VERSION"
-  asdf global kotlin "$KOTLIN_VERSION"
 fi
+asdf global kotlin "$KOTLIN_VERSION"
 
 # Golang
-if [[ -z $(asdf plugin list | grep golang) ]]; then
+if ! asdf plugin list | grep -q golang; then
   asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
 fi
-if [[ -z $(asdf list golang | grep "$GOLANG_VERSION") ]]; then
+if ! asdf list golang | grep -q "$GOLANG_VERSION"; then
   asdf install golang "$GOLANG_VERSION"
-  asdf global golang "$GOLANG_VERSION"
 fi
+asdf global golang "$GOLANG_VERSION"
 
 # reshim
-if [[ -d "$HOME/.asdf/shims" ]]; then
+if [ -d "$HOME/.asdf/shims" ]; then
   rm -rf "$HOME/.asdf/shims"
 fi
 asdf reshim
@@ -262,7 +278,7 @@ brew_cask_install "/Applications/Docker.app" docker
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
 
-if [[ $# -gt 0 && "$1" == "p" ]]; then
+if [ $IS_PERSONAL ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
   brew_cask_install "/Applications/Processing.app" processing
   brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
@@ -270,8 +286,7 @@ if [[ $# -gt 0 && "$1" == "p" ]]; then
   brew_cask_install "/Applications/Raspberry Pi Imager.app" raspberry-pi-imager
   brew_cask_install "/Applications/Arduino IDE.app" arduino-ide
   brew_cask_install "/Applications/Google Drive.app" google-drive
-fi
-if [[ $# -gt 0 && "$1" == "w" ]]; then
+else
   brew_cask_install "/Applications/Firefox.app" firefox
   ssh_keygen "w"
 fi
@@ -289,3 +304,6 @@ mas upgrade
 
 # Upgrade macOs
 # softwareupdate --all --install --force
+
+brew_install shfmt
+shfmt -l -w -i 2 "$0"
