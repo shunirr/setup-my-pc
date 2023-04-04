@@ -101,9 +101,9 @@ install_rosetta2() {
 ########
 
 if [ $# -eq 1 ] && [ "$1" = "p" ]; then
-  IS_PERSONAL=true
+  IS_PERSONAL="true"
 elif [ $# -eq 1 ] && [ "$1" = "w" ]; then
-  IS_PERSONAL=false
+  IS_PERSONAL="false"
 else
   echo "Invalid argument: Please set p or w"
   exit 1
@@ -278,7 +278,7 @@ brew_cask_install "/Applications/Docker.app" docker
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
 
-if [ $IS_PERSONAL ]; then
+if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
   brew_cask_install "/Applications/Processing.app" processing
   brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
