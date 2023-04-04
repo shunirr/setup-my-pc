@@ -14,8 +14,11 @@ shopt -s autocd
 
 # Android SDK
 export ANDROID_SDK=$HOME/Library/Android/sdk
-LATEST_BUILD_TOOLS="$(find "$ANDROID_SDK/build-tools" -d -maxdepth 1 ! -name "build-tools" -print | sort -hr | head -1)"
-export PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/platform-tools:$LATEST_BUILD_TOOLS"
+export PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/platform-tools"
+if [ -d "$ANDROID_SDK/build-tools" ]; then
+  LATEST_BUILD_TOOLS="$(find "$ANDROID_SDK/build-tools" -d -maxdepth 1 ! -name "build-tools" -print | sort -hr | head -1)"
+  export PATH="$PATH:$LATEST_BUILD_TOOLS"
+fi
 
 # Dart
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH:$HOME/.pub-cache/bin"
