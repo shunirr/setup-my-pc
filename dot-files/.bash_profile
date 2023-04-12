@@ -3,6 +3,18 @@ if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+export PATH="$PATH:$HOME/.docker/bin"
+# Android SDK
+export ANDROID_SDK=$HOME/Library/Android/sdk
+export PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/platform-tools"
+if [ -d "$ANDROID_SDK/build-tools" ]; then
+  LATEST_BUILD_TOOLS="$(find "$ANDROID_SDK/build-tools" -d -maxdepth 1 ! -name "build-tools" -print | sort -hr | head -1)"
+  export PATH="$PATH:$LATEST_BUILD_TOOLS"
+fi
+
+# Dart
+export PATH="$PATH:$HOME/.pub-cache/bin"
+
 if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   # shellcheck source=/dev/null
   . "$(brew --prefix)/etc/bash_completion"
@@ -14,14 +26,6 @@ fi
 if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
   # shellcheck source=/dev/null
   . "$(brew --prefix asdf)/libexec/asdf.sh"
-fi
-if [ -f "$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" ]; then
-  # shellcheck source=/dev/null
-  . "$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash"
-fi
-if [ -f "$(brew --prefix)/opt/asdf/etc/bash_completion.d/asdf.bash" ]; then
-  # shellcheck source=/dev/null
-  . "$(brew --prefix)/opt/asdf/etc/bash_completion.d/asdf.bash"
 fi
 if [ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]; then
   # shellcheck source=/dev/null
