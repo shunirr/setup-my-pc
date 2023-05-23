@@ -15,6 +15,13 @@ fi
 # Dart
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
+# FENV
+export FENV_ROOT="$HOME/.fenv"
+if [ -d "$FENV_ROOT" ]; then
+  command -v fenv >/dev/null || export PATH="$FENV_ROOT/bin:$PATH"
+  eval "$(fenv init -)"
+fi
+
 if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   # shellcheck source=/dev/null
   . "$(brew --prefix)/etc/bash_completion"

@@ -6,6 +6,7 @@ NODE_VERSION="18.15.0"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.8.10"
 GOLANG_VERSION="1.20.2"
+DENO_VERSION="1.33.4"
 
 wait_process() {
   sleep 5
@@ -197,6 +198,15 @@ if ! which yarn | grep -q "asdf"; then
   npm install -g yarn
 fi
 
+# Deno
+if ! asdf plugin list | grep -q deno; then
+  asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git
+fi
+if ! asdf list deno | grep -q "$DENO_VERSION"; then
+  asdf install deno "$DENO_VERSION"
+fi
+asdf global deno "$DENO_VERSION"
+
 # Uninstall default java8
 if [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]; then
   sudo rm -rf "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin"
@@ -242,10 +252,11 @@ fi
 asdf reshim
 
 # Flutter
-brew tap dart-lang/dart
-brew_install dart
-brew_install cocoapods
-dart pub global activate fvm
+if [ ! -f "$HOME/.fenv/bin/fenv" ]; then
+  curl -sSL "https://raw.githubusercontent.com/powdream/fenv/main/init.sh" | sh -
+  # shellcheck disable=SC2086
+  $HOME/.fenv/bin/fenv init
+fi
 
 # Android
 brew_cask_install "/Applications/Android Studio.app" android-studio
