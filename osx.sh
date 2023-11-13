@@ -6,7 +6,7 @@ NODE_VERSION="18.15.0"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.8.10"
 GOLANG_VERSION="1.20.2"
-DENO_VERSION="1.33.4"
+DENO_VERSION="1.38.1"
 
 wait_process() {
   sleep 5
