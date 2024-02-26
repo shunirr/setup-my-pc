@@ -123,8 +123,8 @@ homebrew_init
 
 brew_install mas
 
-mas_install 497799835 # Xcode
-sudo xcodebuild -license accept
+# mas_install 497799835 # Xcode
+# sudo xcodebuild -license accept
 
 brew_install shellcheck
 if ! shellcheck "$0"; then
@@ -274,6 +274,10 @@ brew_install plantuml
 brew_install awscli
 brew_install tfenv
 
+# Xcodes
+brew_install xcodesorg/made/xcodes
+brew_cask_install "/Applications/Xcodes.app" xcodes
+
 # Other applications
 brew_install bitwarden-cli
 
@@ -287,7 +291,6 @@ brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
-brew_cask_install "/Applications/Xcodes.app" xcodes
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
