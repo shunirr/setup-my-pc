@@ -294,12 +294,6 @@ brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
-  brew_cask_install "/Applications/Processing.app" processing
-  brew_cask_install "/Applications/Eclipse Java.app" eclipse-java
-  brew_cask_install "/Applications/Eclipse JEE.app" eclipse-jee
-  brew_cask_install "/Applications/Raspberry Pi Imager.app" raspberry-pi-imager
-  brew_cask_install "/Applications/Arduino IDE.app" arduino-ide
-  brew_cask_install "/Applications/Google Drive.app" google-drive
 else
   brew_cask_install "/Applications/Firefox.app" firefox
   ssh_keygen "w"
