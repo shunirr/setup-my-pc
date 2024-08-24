@@ -7,6 +7,7 @@ JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.8.10"
 GOLANG_VERSION="1.20.2"
 DENO_VERSION="1.38.1"
+PYTHON_VERSION="3.12.5"
 
 wait_process() {
   sleep 5
@@ -182,6 +183,15 @@ asdf global ruby "$RUBY_VERSION"
 if ! which bundle | grep -q "asdf"; then
   gem install bundler
 fi
+
+# Python
+if ! asdf plugin list | grep -q python; then
+  asdf plugin-add python
+fi
+if ! asdf list python | grep -q "$PYTHON_VERSION"; then
+  asdf install python "$PYTHON_VERSION"
+fi
+asdf global python "$PYTHON_VERSION"
 
 # Nodejs
 if ! asdf plugin list | grep -q nodejs; then
