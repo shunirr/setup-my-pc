@@ -7,6 +7,7 @@ JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.8.10"
 GOLANG_VERSION="1.20.2"
 DENO_VERSION="2.0.1"
+PYTHON_VERSION="3.12.5"
 
 wait_process() {
   sleep 5
@@ -183,6 +184,15 @@ if ! which bundle | grep -q "asdf"; then
   gem install bundler
 fi
 
+# Python
+if ! asdf plugin list | grep -q python; then
+  asdf plugin-add python
+fi
+if ! asdf list python | grep -q "$PYTHON_VERSION"; then
+  asdf install python "$PYTHON_VERSION"
+fi
+asdf global python "$PYTHON_VERSION"
+
 # Nodejs
 if ! asdf plugin list | grep -q nodejs; then
   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
@@ -295,6 +305,8 @@ brew_cask_install "/Applications/Charles.app" charles
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
+  brew_cask_install "/Applications/Docker.app" docker
+  brew_install docker-compose
 else
   brew_cask_install "/Applications/Firefox.app" firefox
   ssh_keygen "w"
