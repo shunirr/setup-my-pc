@@ -6,7 +6,7 @@ NODE_VERSION="18.15.0"
 JAVA_VERSION="adoptopenjdk-11.0.18+10"
 KOTLIN_VERSION="1.8.10"
 GOLANG_VERSION="1.20.2"
-DENO_VERSION="1.38.1"
+DENO_VERSION="2.0.1"
 
 wait_process() {
   sleep 5
@@ -291,6 +291,7 @@ brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
+brew_cask_install "/Applications/Charles.app" charles
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
