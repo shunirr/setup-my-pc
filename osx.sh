@@ -301,7 +301,7 @@ brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
 brew_cask_install "/Applications/Slack.app" slack
 brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
-brew_cask_install "/Applications/Charles.app" charles
+brew_cask_install "/Applications/Proxyman.app" proxyman
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
