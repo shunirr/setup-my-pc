@@ -308,8 +308,9 @@ if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Docker.app" docker
   brew_install docker-compose
 else
-  brew_cask_install "/Applications/Firefox.app" firefox
   ssh_keygen "w"
+  brew_cask_install "/Applications/Firefox.app" firefox
+  brew_cask_install "/Applications/Dialpad.app" dialpad
 fi
 
 mas_install 539883307 # LINE
