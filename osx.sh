@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-RUBY_VERSION="3.2.1"
-NODE_VERSION="18.15.0"
-JAVA_VERSION="adoptopenjdk-11.0.18+10"
-KOTLIN_VERSION="1.8.10"
-GOLANG_VERSION="1.20.2"
-DENO_VERSION="2.0.1"
-PYTHON_VERSION="3.12.5"
+RUBY_VERSION="3.3.6"
+PYTHON_VERSION="3.13.1"
+NODE_VERSION="22.12.0"
+JAVA_VERSION="adoptopenjdk-11.0.25+9"
+KOTLIN_VERSION="2.1.0"
+GOLANG_VERSION="1.23.4"
+DENO_VERSION="2.1.4"
 
 wait_process() {
   sleep 5
@@ -100,6 +100,22 @@ install_rosetta2() {
   fi
 }
 
+uninstall_asdf() {
+  if [ -d "$(brew --prefix)/Cellar/asdf" ]; then
+    brew uninstall --force asdf
+    brew autoremove
+  fi
+  if [ -f "$HOME/.asdfrc" ]; then
+    rm -rf "$HOME/.asdfrc"
+  fi
+  if [ -d "$HOME/.tool-versions" ]; then
+    rm -rf "$HOME/.tool-versions"
+  fi
+  if [ -d "$HOME/.asdf" ]; then
+    rm -rf "$HOME/.asdf"
+  fi
+}
+
 ########
 
 if [ $# -eq 1 ] && [ "$1" = "p" ]; then
@@ -134,6 +150,7 @@ if ! shellcheck "$0"; then
 fi
 
 brew_install git
+brew_install git-lfs
 brew_install tmux
 brew_install wget
 brew_install the_silver_searcher
@@ -164,58 +181,34 @@ fi
 # shellcheck disable=SC1091
 source "$HOME/.bashrc"
 
-# asdf
-brew_install asdf
-asdf plugin update --all
+# uninstall asdf
+uninstall_asdf
+
+# mise
+brew_install mise
 
 # Ruby
-if ! asdf plugin list | grep -q ruby; then
-  asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-fi
-if ! asdf list ruby | grep -q "$RUBY_VERSION"; then
-  if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
-    export RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC
-  fi
-  asdf install ruby "$RUBY_VERSION"
-fi
-asdf global ruby "$RUBY_VERSION"
+brew_install libyaml
+mise use --global "ruby@$RUBY_VERSION"
 
-if ! which bundle | grep -q "asdf"; then
+if ! which bundle | grep -q "mise"; then
   gem install bundler
 fi
 
 # Python
-if ! asdf plugin list | grep -q python; then
-  asdf plugin-add python
-fi
-if ! asdf list python | grep -q "$PYTHON_VERSION"; then
-  asdf install python "$PYTHON_VERSION"
-fi
-asdf global python "$PYTHON_VERSION"
+mise use --global "python@$PYTHON_VERSION"
 
 # Nodejs
-if ! asdf plugin list | grep -q nodejs; then
-  asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-  brew_install gpg
-  brew_install coreutils
-  bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-fi
-if ! asdf list nodejs | grep -q "$NODE_VERSION"; then
-  asdf install nodejs "$NODE_VERSION"
-fi
-asdf global nodejs "$NODE_VERSION"
-if ! which yarn | grep -q "asdf"; then
+mise use --global "nodejs@$NODE_VERSION"
+if ! which yarn | grep -q "mise"; then
   npm install -g yarn
+fi
+if ! which pnpm | grep -q "mise"; then
+  npm install -g pnpm
 fi
 
 # Deno
-if ! asdf plugin list | grep -q deno; then
-  asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git
-fi
-if ! asdf list deno | grep -q "$DENO_VERSION"; then
-  asdf install deno "$DENO_VERSION"
-fi
-asdf global deno "$DENO_VERSION"
+mise use --global "deno@$DENO_VERSION"
 
 # Uninstall default java8
 if [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" ]; then
@@ -229,41 +222,20 @@ if [ -d "$HOME/Library/Application Support/Java" ]; then
 fi
 
 # Java
-if ! asdf plugin list | grep -q java; then
-  asdf plugin-add java https://github.com/halcyon/asdf-java.git
-fi
-if ! asdf list java | grep -q "$JAVA_VERSION"; then
-  asdf install java "$JAVA_VERSION"
-fi
-asdf global java "$JAVA_VERSION"
+mise use --global "java@$JAVA_VERSION"
 
 # Kotlin
-if ! asdf plugin list | grep -q kotlin; then
-  asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
-fi
-if ! asdf list kotlin | grep -q "$KOTLIN_VERSION"; then
-  asdf install kotlin "$KOTLIN_VERSION"
-fi
-asdf global kotlin "$KOTLIN_VERSION"
+mise use --global "kotlin@$KOTLIN_VERSION"
 
 # Golang
-if ! asdf plugin list | grep -q golang; then
-  asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
-fi
-if ! asdf list golang | grep -q "$GOLANG_VERSION"; then
-  asdf install golang "$GOLANG_VERSION"
-fi
-asdf global golang "$GOLANG_VERSION"
+mise use --global "golang@$GOLANG_VERSION"
 
 # reshim
-if [ -d "$HOME/.asdf/shims" ]; then
-  rm -rf "$HOME/.asdf/shims"
-fi
-asdf reshim
+mise reshim --force
 
 # Flutter
 if [ ! -f "$HOME/.fenv/bin/fenv" ]; then
-  curl -sSL "https://raw.githubusercontent.com/powdream/fenv/main/init.sh" | sh -
+  curl -fsSL "https://fenv-install.jerry.company" | bash
   # shellcheck disable=SC2086
   $HOME/.fenv/bin/fenv init
 fi
@@ -305,8 +277,6 @@ brew_cask_install "/Applications/Proxyman.app" proxyman
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
-  brew_cask_install "/Applications/Docker.app" docker
-  brew_install docker-compose
 else
   ssh_keygen "w"
   brew_cask_install "/Applications/Firefox.app" firefox

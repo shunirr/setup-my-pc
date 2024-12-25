@@ -7,4 +7,3 @@ alias ls="ls -F -G"
 
 shopt -s globstar
 shopt -s autocd
-

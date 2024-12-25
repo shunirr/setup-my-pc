@@ -18,7 +18,7 @@ export PATH="$PATH:$HOME/.pub-cache/bin"
 # FENV
 export FENV_ROOT="$HOME/.fenv"
 if [ -d "$FENV_ROOT" ]; then
-  command -v fenv >/dev/null || export PATH="$FENV_ROOT/bin:$PATH"
+  export PATH="$FENV_ROOT/bin:$PATH"
   eval "$(fenv init -)"
 fi
 
@@ -26,17 +26,9 @@ if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   # shellcheck source=/dev/null
   . "$(brew --prefix)/etc/bash_completion"
 fi
-if [ -f "$(brew --prefix)/opt/asdf/asdf.sh" ]; then
-  # shellcheck source=/dev/null
-  . "$(brew --prefix)/opt/asdf/asdf.sh"
-fi
-if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
-  # shellcheck source=/dev/null
-  . "$(brew --prefix asdf)/libexec/asdf.sh"
-fi
-if [ -f "$HOME/.asdf/plugins/java/set-java-home.bash" ]; then
-  # shellcheck source=/dev/null
-  . "$HOME/.asdf/plugins/java/set-java-home.bash"
+
+if [ -f "/opt/homebrew/bin/mise" ]; then
+  eval "$(/opt/homebrew/bin/mise activate bash)"
 fi
 
 export LANG="ja_JP.UTF-8"

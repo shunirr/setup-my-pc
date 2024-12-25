@@ -7,3 +7,5 @@
   st = status
 [push]
   default = simple
+[init]
+	defaultBranch = main
