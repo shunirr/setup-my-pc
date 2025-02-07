@@ -81,8 +81,11 @@ brew_cask_install() {
 }
 
 mas_install() {
-  if ! mas list | grep -q "$1"; then
-    mas install "$1"
+  if [ -d "$(brew --prefix)/Caskroom/$1" ]; then
+    brew uninstall "$1"
+  fi
+  if ! mas list | grep -q "$2"; then
+    mas install "$2"
   fi
 }
 
@@ -267,14 +270,12 @@ brew_cask_install "/Applications/Karabiner-Elements.app" karabiner-elements
 brew_cask_install "/Library/Input Methods/AquaSKK.app" aquaskk
 brew_cask_install "/Applications/WezTerm.app" wezterm
 brew_cask_install "/Applications/Visual Studio Code.app" visual-studio-code
-brew_cask_install "/Applications/iStat Menus.app" istat-menus
 brew_cask_install "/Applications/Microsoft Word.app" microsoft-office
 brew_cask_install "/Applications/zoom.us.app" zoom
 brew_cask_install "/Applications/Google Chrome.app" google-chrome
-brew_cask_install "/Applications/Slack.app" slack
-brew_cask_install "/Applications/The Unarchiver.app" the-unarchiver
 brew_cask_install "/Applications/Proxyman.app" proxyman
 brew_cask_install "/Applications/Finicky.app" finicky
+brew_cask_install "/Applications/Rancher Desktop.app" rancher
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
@@ -284,7 +285,9 @@ else
   brew_cask_install "/Applications/Dialpad.app" dialpad
 fi
 
-mas_install 539883307 # LINE
+mas_install line 539883307
+mas_install slack 803453959
+mas_install the-unarchiver 425424353
 
 # Fonts
 install_hackgen
