@@ -3,6 +3,7 @@ set -euxo pipefail
 
 RUBY_VERSION="3.3.6"
 PYTHON_VERSION="3.13.1"
+PYTHON_POETRY_VERSION="1.8.5"
 NODE_VERSION="22.12.0"
 JAVA_VERSION="adoptopenjdk-11.0.25+9"
 KOTLIN_VERSION="2.1.0"
@@ -200,6 +201,8 @@ fi
 
 # Python
 mise use --global "python@$PYTHON_VERSION"
+mise plugin add poetry
+mise use --global "poetry@$PYTHON_POETRY_VERSION"
 
 # Nodejs
 mise use --global "nodejs@$NODE_VERSION"
