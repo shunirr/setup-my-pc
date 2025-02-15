@@ -1,6 +1,10 @@
 # shellcheck shell=bash
-if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ "$(uname)" = "Darwin" ]; then
+  if  [ "$(uname -m)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  else
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
 export PATH="$PATH:$HOME/.docker/bin"
