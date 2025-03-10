@@ -189,7 +189,7 @@ source "$HOME/.bashrc"
 uninstall_asdf
 
 # mise
-brew_install mise
+curl https://mise.run | sh
 
 # Ruby
 brew_install libyaml

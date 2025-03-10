@@ -31,8 +31,9 @@ if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   . "$(brew --prefix)/etc/bash_completion"
 fi
 
-if [ -f "$(brew --prefix)/bin/mise" ]; then
-  eval "$($(brew --prefix)/bin/mise activate bash)"
+# MISE
+if [ -f "$HOME/.local/bin/mise" ]; then
+  eval "$($HOME/.local/bin/mise activate bash)"
 fi
 
 export LANG="ja_JP.UTF-8"
