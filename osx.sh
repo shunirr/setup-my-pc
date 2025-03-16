@@ -280,6 +280,7 @@ brew_cask_install "/Applications/Proxyman.app" proxyman
 brew_cask_install "/Applications/Finicky.app" finicky
 brew_cask_install "/Applications/Rancher Desktop.app" rancher
 brew_cask_install "/Applications/BetterDisplay.app" betterdisplay
+brew_cask_install "/Applications/Claude Desktop.app" claude
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
