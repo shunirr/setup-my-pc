@@ -280,15 +280,17 @@ brew_cask_install "/Applications/Proxyman.app" proxyman
 brew_cask_install "/Applications/Finicky.app" finicky
 brew_cask_install "/Applications/Rancher Desktop.app" rancher
 brew_cask_install "/Applications/BetterDisplay.app" betterdisplay
-brew_cask_install "/Applications/Claude.app" claude
-brew_cask_install "/Applications/Cursor.app" cursor
+brew_cask_install "/Applications/Obsidian.app" obsidian
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
+  brew_cask_install "/Applications/Claude.app" claude
+  brew_cask_install "/Applications/Cursor.app" cursor
 else
   ssh_keygen "w"
   brew_cask_install "/Applications/Firefox.app" firefox
   brew_cask_install "/Applications/Dialpad.app" dialpad
+  brew_cask_install "/Applications/Box.app" box-drive
 fi
 
 mas_install line 539883307
