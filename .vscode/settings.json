@@ -1,7 +1,29 @@
 {
     "cSpell.words": [
+        "apktool",
+        "aquaskk",
+        "asdfrc",
+        "awscli",
+        "betterdisplay",
+        "bitwarden",
+        "bundletool",
+        "ccache",
+        "dialpad",
+        "fenv",
+        "graphviz",
+        "hackgen",
+        "Karabiner",
+        "keygen",
+        "libyaml",
         "NOPASSWD",
+        "plantuml",
+        "proxyman",
         "shellenv",
-        "softwareupdate"
+        "softwareupdate",
+        "tfenv",
+        "unarchiver",
+        "wezterm",
+        "Xcodes",
+        "xcodesorg"
     ],
 }
