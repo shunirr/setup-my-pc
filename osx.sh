@@ -36,7 +36,7 @@ brew_install "pkgconf"
 # Bash
 brew_install "bash"
 brew_install "bash-completion"
-change_shell "$(which bash)"
+change_shell "$(brew --prefix)/bin/bash"
 if [ ! -f "$HOME/.bashrc_private" ]; then
   touch "$HOME/.bashrc_private"
 fi
