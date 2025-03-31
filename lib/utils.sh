@@ -107,14 +107,14 @@ mas_install() {
 
 gem_install() {
   info "Installing $1"
-  if ! which "$1" | grep -q "$1"; then
+  if ! type "$1" >/dev/null 2>&1; then
     gem install "$1"
   fi
 }
 
 npm_install() {
   info "Installing $1"
-  if ! which "$1" | grep -q "$1"; then
+  if ! type "$1" >/dev/null 2>&1; then
     npm install -g "$1"
   fi
 }
