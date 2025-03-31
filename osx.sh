@@ -286,6 +286,7 @@ if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "/Applications/Utilities/Adobe Creative Cloud/ACC/Creative Cloud.app" adobe-creative-cloud
   brew_cask_install "/Applications/Claude.app" claude
   brew_cask_install "/Applications/Cursor.app" cursor
+  brew_cask_install "/Applications/Synology Drive.app" synology-drive
 else
   ssh_keygen "w"
   brew_cask_install "/Applications/Firefox.app" firefox
