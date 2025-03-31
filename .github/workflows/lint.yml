@@ -1,0 +1,14 @@
+name: Lint
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck
+        run: shellcheck osx.sh ./lib/utils.sh ./dot-files/.bashrc

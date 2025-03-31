@@ -18,6 +18,7 @@
         "NOPASSWD",
         "plantuml",
         "proxyman",
+        "shellcheck",
         "shellenv",
         "softwareupdate",
         "tfenv",
