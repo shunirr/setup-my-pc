@@ -184,6 +184,13 @@ change_shell() {
   fi
 }
 
+install_mise() {
+  info "Installing mise"
+  if ! type mise >/dev/null 2>&1; then
+    curl "https://mise.run" | sh
+  fi
+}
+
 mise_plugin_add() {
   info "Adding mise plugin $1"
   if ! mise plugin list | grep -q "$1"; then
@@ -191,7 +198,11 @@ mise_plugin_add() {
   fi
 }
 
-mise_install() {
-  info "Installing apps by mise"
+mise_install_all() {
+  info "Installing all apps by mise"
   mise install
+}
+
+copy_dotfiles() {
+  cp -R "dot-files/." "$HOME"
 }

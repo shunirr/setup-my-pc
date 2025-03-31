@@ -19,16 +19,15 @@ ssh_keygen
 install_rosetta2
 install_command_line_developer_tools
 
-# Copy dot-files
-cp -R "dot-files/." "$HOME"
+copy_dotfiles
 
 homebrew_init
 
+install_hackgen
+
 brew_install "git"
 brew_install "git-lfs"
-brew_install "tmux"
 brew_install "wget"
-brew_install "the_silver_searcher"
 brew_install "jq"
 brew_install "ccache"
 brew_install "cmake"
@@ -37,24 +36,17 @@ brew_install "pkgconf"
 # Bash
 brew_install "bash"
 brew_install "bash-completion"
-
 change_shell "$(which bash)"
-
 if [ ! -f "$HOME/.bashrc_private" ]; then
   touch "$HOME/.bashrc_private"
 fi
-
-# Load bashrc
-# shellcheck disable=SC1091
-source "$HOME/.bashrc"
+source "./dot-files/.bashrc"
 
 uninstall_asdf
 uninstall_java8
 
 # mise
-if ! type mise >/dev/null 2>&1; then
-  curl "https://mise.run" | sh
-fi
+install_mise
 
 # Ruby
 brew_install "libyaml"
@@ -67,7 +59,7 @@ mise_plugin_add "poetry"
 npm_install "yarn"
 npm_install "pnpm"
 
-mise_install
+mise_install_all
 
 # Flutter
 install_fenv
@@ -88,6 +80,7 @@ brew_install "tfenv"
 # Xcodes
 brew_install "xcodesorg/made/xcodes"
 brew_cask_install "xcodes"
+
 info "Install Xcode by xcodes"
 xcodes install --latest
 sudo xcodebuild -license accept
@@ -120,19 +113,12 @@ fi
 
 # Mac App Store
 brew_install "mas"
-
 mas_install "line"           "539883307"
 mas_install "slack"          "803453959"
 mas_install "the-unarchiver" "425424353"
 
-# Fonts
-install_hackgen
-
-# Upgrade all casks
+info "Upgrade all casks"
 brew upgrade --cask --greedy -f
 
-# Upgrade all apps that managed MacAppStore
+info "Upgrade all apps that managed MacAppStore"
 mas upgrade
-
-# Upgrade macOs
-# softwareupdate --all --install --force
