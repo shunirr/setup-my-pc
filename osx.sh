@@ -32,6 +32,7 @@ brew_install "jq"
 brew_install "ccache"
 brew_install "cmake"
 brew_install "pkgconf"
+brew_install "libyaml"
 
 # Bash
 brew_install "bash"
@@ -47,27 +48,15 @@ uninstall_java8
 
 # mise
 install_mise
-
-# Ruby
-brew_install "libyaml"
-gem_install "bundler"
-
-# Python
 mise_plugin_add "poetry"
-
-# Nodejs
-npm_install "yarn"
-npm_install "pnpm"
-
 mise_install_all
 
-# Flutter
-install_fenv
+# Ruby
+gem_install "bundler"
 
-# Android
-brew_cask_install "android-studio"
-brew_install "apktool"
-brew_install "bundletool"
+# NodeJS
+npm_install "yarn"
+npm_install "pnpm"
 
 # Graph
 brew_install "graphviz"
@@ -84,6 +73,17 @@ brew_cask_install "xcodes"
 info "Install Xcode by xcodes"
 xcodes install --latest
 sudo xcodebuild -license accept
+
+gem_install "cocoapods"
+
+# Android
+brew_cask_install "android-studio"
+brew_install "apktool"
+brew_install "bundletool"
+
+# Flutter
+install_fenv
+fenv install
 
 brew_install "bitwarden-cli"
 

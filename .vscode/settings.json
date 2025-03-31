@@ -8,6 +8,7 @@
         "bitwarden",
         "bundletool",
         "ccache",
+        "cocoapods",
         "dialpad",
         "fenv",
         "graphviz",
