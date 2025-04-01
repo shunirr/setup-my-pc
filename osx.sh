@@ -69,6 +69,9 @@ brew_install "tfenv"
 # Xcodes
 brew_install "xcodesorg/made/xcodes"
 brew_cask_install "xcodes"
+if ! type xcodes >/dev/null 2>&1; then
+  brew link xcodes
+fi
 
 info "Install Xcode by xcodes"
 xcodes install --latest
@@ -104,17 +107,12 @@ if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "adobe-creative-cloud"
   brew_cask_install "claude"
   brew_cask_install "cursor"
-else
-  ssh_keygen "w"
-  brew_cask_install "firefox"
-  brew_cask_install "dialpad"
-  brew_cask_install "box-drive"
 fi
 
 # Mac App Store
 brew_install "mas"
-mas_install "line"           "539883307"
-mas_install "slack"          "803453959"
+mas_install "line" "539883307"
+mas_install "slack" "803453959"
 mas_install "the-unarchiver" "425424353"
 
 info "Upgrade all casks"
@@ -122,3 +120,5 @@ brew upgrade --cask --greedy -f
 
 info "Upgrade all apps that managed MacAppStore"
 mas upgrade
+
+brew cleanup

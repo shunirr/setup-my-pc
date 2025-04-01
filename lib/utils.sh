@@ -54,10 +54,10 @@ install_command_line_developer_tools() {
 
 install_homebrew() {
   info "Installing Homebrew"
-  if ! type brew; then
+  if ! type brew >/dev/null 2>&1; then
     /bin/bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
     if [ "$(uname)" = "Darwin" ]; then
-      if  [ "$(uname -m)" = "arm64" ]; then
+      if [ "$(uname -m)" = "arm64" ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
       else
         eval "$(/usr/local/bin/brew shellenv)"
@@ -129,7 +129,7 @@ install_hackgen() {
 }
 
 install_rosetta2() {
-  info  "Installing Rosetta 2"
+  info "Installing Rosetta 2"
   if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
     softwareupdate --install-rosetta --agree-to-license
   fi
@@ -204,5 +204,6 @@ mise_install_all() {
 }
 
 copy_dotfiles() {
+  info "Copy dotfiles"
   cp -R "dot-files/." "$HOME"
 }
