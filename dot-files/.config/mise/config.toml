@@ -1,5 +1,5 @@
 [tools]
-deno = "2.1.6"
+deno = "2.2.6"
 go = "1.23.4"
 java = "adoptopenjdk-11.0.26+4"
 kotlin = "2.1.20"
