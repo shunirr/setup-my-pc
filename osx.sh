@@ -14,7 +14,7 @@ fi
 
 add_sudoers
 join_wheel_group
-ssh_keygen
+ssh_keygen ""
 
 install_rosetta2
 install_command_line_developer_tools

@@ -20,7 +20,7 @@ wait_process() {
 ssh_keygen() {
   info "Generating SSH key"
   SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
-  if [ $# -eq 1 ]; then
+  if [ -n "$1" ]; then
     SSH_KEY_PATH="${SSH_KEY_PATH}_$1"
   fi
   if [ ! -f "$SSH_KEY_PATH" ]; then
