@@ -33,6 +33,8 @@ brew_install "ccache"
 brew_install "cmake"
 brew_install "pkgconf"
 brew_install "libyaml"
+brew_install "gmp"
+brew_install "ruby-build"
 
 # Bash
 brew_install "bash"
@@ -45,6 +47,10 @@ source "./dot-files/.bashrc"
 
 uninstall_asdf
 uninstall_java8
+
+# Shell
+brew_install "shellcheck"
+brew_install "shfmt"
 
 # mise
 install_mise
@@ -83,12 +89,18 @@ gem_install "cocoapods"
 brew_cask_install "android-studio"
 brew_install "apktool"
 brew_install "bundletool"
+brew_install "dex2jar"
+brew_install "jadx"
 
 # Flutter
 install_fenv
 fenv install
 
 brew_install "bitwarden-cli"
+brew_install "tmux"
+brew_install "gh"
+brew_install "nkf"
+brew_install "imagemagick"
 
 brew_cask_install "karabiner-elements"
 brew_cask_install "aquaskk"
@@ -102,6 +114,7 @@ brew_cask_install "finicky"
 brew_cask_install "rancher"
 brew_cask_install "betterdisplay"
 brew_cask_install "obsidian"
+brew_cask_install "istat-menus"
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install "adobe-creative-cloud"
@@ -114,6 +127,7 @@ brew_install "mas"
 mas_install "line" "539883307"
 mas_install "slack" "803453959"
 mas_install "the-unarchiver" "425424353"
+mas_install "bitwarden" "1352778147"
 
 info "Upgrade all casks"
 brew upgrade --cask --greedy -f
@@ -121,4 +135,9 @@ brew upgrade --cask --greedy -f
 info "Upgrade all apps that managed MacAppStore"
 mas upgrade
 
+info "Installing from Brewfile"
+brew bundle install
+
+info "Cleanup"
+brew autoremove
 brew cleanup
