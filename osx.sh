@@ -80,7 +80,8 @@ if ! type xcodes >/dev/null 2>&1; then
 fi
 
 info "Install Xcode by xcodes"
-xcodes install --latest
+xcodes install
+xcodes select
 sudo xcodebuild -license accept
 
 gem_install "cocoapods"
