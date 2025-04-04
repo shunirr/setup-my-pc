@@ -13,6 +13,8 @@
         "fenv",
         "graphviz",
         "hackgen",
+        "istat",
+        "jadx",
         "Karabiner",
         "keygen",
         "libyaml",
