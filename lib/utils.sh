@@ -66,18 +66,17 @@ install_homebrew() {
   fi
 }
 
+brew_update() {
+  info "Update Homebrew"
+  brew update
+}
+
 homebrew_init() {
   install_homebrew
-
-  info "Update Homebrew"
-  brew "update"
-
-  info "Upgrade Homebrew"
-  brew "upgrade"
+  brew_update
 }
 
 BREW_INSTALLED=""
-
 brew_install() {
   info "Installing $1"
   if [ -z "$BREW_INSTALLED" ]; then
@@ -97,11 +96,11 @@ brew_cask_install() {
 
 mas_install() {
   info "Installing $1"
-  if [ -d "$(brew --prefix)/Caskroom/$1" ]; then
-    brew uninstall "$1"
-  fi
-  if ! mas list | grep -q "$2"; then
+  if ! mas list | grep -q "$1"; then
     mas install "$2"
+  fi
+  if [ $# -eq 2 ] && [ -d "$(brew --prefix)/Caskroom/$2" ]; then
+    brew uninstall "$2"
   fi
 }
 
@@ -122,15 +121,14 @@ npm_install() {
 install_hackgen() {
   info "Installing HackGen"
   if [ -z "$(find "$HOME/Library/Fonts" -name 'HackGen*.ttf')" ]; then
-    brew tap "homebrew/cask-fonts"
-    brew_install "font-hackgen"
-    brew_install "font-hackgen-nerd"
+    brew_install font-hackgen
+    brew_install font-hackgen-nerd
   fi
 }
 
 install_rosetta2() {
   info "Installing Rosetta 2"
-  if [ "$(uname)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ]; then
+  if [ "$(uname -m)" = "arm64" ]; then
     softwareupdate --install-rosetta --agree-to-license
   fi
 }
@@ -138,7 +136,7 @@ install_rosetta2() {
 uninstall_asdf() {
   info "Uninstalling asdf"
   if [ -d "$(brew --prefix)/Cellar/asdf" ]; then
-    brew uninstall --force "asdf"
+    brew uninstall --force asdf
     brew autoremove
   fi
   if [ -f "$HOME/.asdfrc" ]; then
@@ -169,8 +167,7 @@ install_fenv() {
   info "Installing fenv"
   if [ ! -f "$HOME/.fenv/bin/fenv" ]; then
     curl -fsSL "https://fenv-install.jerry.company" | bash
-    # shellcheck disable=SC2086
-    "$HOME/.fenv/bin/fenv" "init"
+    "$HOME/.fenv/bin/fenv" init
   fi
 }
 
@@ -207,4 +204,34 @@ mise_install_all() {
 copy_dotfiles() {
   info "Copy dotfiles"
   cp -R "dot-files/." "$HOME"
+}
+
+use_bash() {
+  info "Using bash from Homebrew"
+  brew_install bash
+  brew_install bash-completion
+  change_shell "$(brew --prefix)/bin/bash"
+  if [ ! -f "$HOME/.bashrc_private" ]; then
+    touch "$HOME/.bashrc_private"
+  fi
+  # shellcheck source=/dev/null
+  source "$HOME/.bashrc"
+}
+
+install_xcodes() {
+  info "Installing xcodes"
+  brew_install xcodesorg/made/xcodes
+  brew_cask_install xcodes
+  if ! type xcodes >/dev/null 2>&1; then
+    brew link xcodes
+  fi
+}
+
+install_xcode_by_xcodes() {
+  install_xcodes
+
+  info "Install Xcode by xcodes"
+  xcodes install
+  xcodes select
+  sudo xcodebuild -license accept
 }

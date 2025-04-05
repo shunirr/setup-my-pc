@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source ./lib/utils.sh
+source lib/utils.sh
 
 IS_PERSONAL="false"
 if [ $# -eq 1 ] && [ "$1" = "p" ]; then
@@ -18,112 +18,102 @@ install_command_line_developer_tools
 copy_dotfiles
 
 homebrew_init
+brew_install git
+brew_install git-lfs
 
 install_hackgen
 
-brew_install "git"
-brew_install "git-lfs"
-brew_install "wget"
-brew_install "jq"
-brew_install "ccache"
-brew_install "cmake"
-brew_install "pkgconf"
-brew_install "libyaml"
-brew_install "gmp"
-brew_install "ruby-build"
+brew_install ccache
+brew_install cmake
+brew_install pkgconf
+brew_install libyaml
+brew_install gmp
+brew_install ruby-build
 
 # Bash
-brew_install "bash"
-brew_install "bash-completion"
-change_shell "$(brew --prefix)/bin/bash"
-if [ ! -f "$HOME/.bashrc_private" ]; then
-  touch "$HOME/.bashrc_private"
-fi
-source "./dot-files/.bashrc"
-
-uninstall_asdf
-uninstall_java8
+use_bash
 
 # Shell
-brew_install "shellcheck"
-brew_install "shfmt"
+brew_install shellcheck
+brew_install shfmt
 
 # mise
+uninstall_asdf
 install_mise
-mise_plugin_add "poetry"
+mise_plugin_add poetry
 mise_install_all
+uninstall_java8
 
 # Ruby
-gem_install "bundler"
+gem_install bundler
 
 # NodeJS
-npm_install "yarn"
-npm_install "pnpm"
+npm_install yarn
+npm_install pnpm
 
-# Graph
-brew_install "graphviz"
-brew_install "plantuml"
+# Xcode
+install_xcode_by_xcodes
 
-# Terraform
-brew_install "awscli"
-brew_install "tfenv"
-
-# Xcodes
-brew_install "xcodesorg/made/xcodes"
-brew_cask_install "xcodes"
-if ! type xcodes >/dev/null 2>&1; then
-  brew link xcodes
-fi
-
-info "Install Xcode by xcodes"
-xcodes install
-xcodes select
-sudo xcodebuild -license accept
-
-gem_install "cocoapods"
+# iOS
+gem_install cocoapods
 
 # Android
-brew_cask_install "android-studio"
-brew_install "apktool"
-brew_install "bundletool"
-brew_install "dex2jar"
-brew_install "jadx"
+brew_cask_install android-studio
+brew_install apktool
+brew_install bundletool
+brew_install dex2jar
+brew_install jadx
 
 # Flutter
 install_fenv
 fenv install
 
-brew_install "bitwarden-cli"
-brew_install "tmux"
-brew_install "gh"
-brew_install "nkf"
-brew_install "imagemagick"
+brew_install astyle
+brew_install wget
+brew_install jq
+brew_install bitwarden-cli
+brew_install tmux
+brew_install gh
+brew_install nkf
+brew_install imagemagick
+brew_install graphviz
+brew_install plantuml
+brew_install awscli
+brew_install tfenv
 
-brew_cask_install "karabiner-elements"
-brew_cask_install "aquaskk"
-brew_cask_install "wezterm"
-brew_cask_install "visual-studio-code"
-brew_cask_install "microsoft-office"
-brew_cask_install "zoom"
-brew_cask_install "google-chrome"
-brew_cask_install "proxyman"
-brew_cask_install "rancher"
-brew_cask_install "betterdisplay"
-brew_cask_install "obsidian"
-brew_cask_install "istat-menus"
+brew_cask_install karabiner-elements
+brew_cask_install aquaskk
+brew_cask_install wezterm
+brew_cask_install visual-studio-code
+brew_cask_install microsoft-office
+brew_cask_install zoom
+brew_cask_install google-chrome
+brew_cask_install proxyman
+brew_cask_install rancher
+brew_cask_install betterdisplay
+brew_cask_install obsidian
+brew_cask_install istat-menus
 
 if [ "$IS_PERSONAL" = 'true' ]; then
-  brew_cask_install "adobe-creative-cloud"
-  brew_cask_install "claude"
-  brew_cask_install "cursor"
+  brew_cask_install adobe-creative-cloud
+  brew_cask_install synology-drive
+  mas_install 1037126344 # Apple Configurator
+  mas_install 302584613 kindle
+  mas_install 1475387142 tail-scale
+
+  # AI
+  brew_cask_install claude
+  brew_cask_install cursor
+  brew_cask_install lm-studio
 fi
 
 # Mac App Store
-brew_install "mas"
-mas_install "line" "539883307"
-mas_install "slack" "803453959"
-mas_install "the-unarchiver" "425424353"
-mas_install "bitwarden" "1352778147"
+brew_install mas
+mas_install 539883307 line 
+mas_install 803453959 slack 
+mas_install 425424353 the-unarchiver
+mas_install 1352778147 bitwarden 
+mas_install 640199958 # Developer 
 
 info "Upgrade all casks"
 brew upgrade --cask --greedy -f
