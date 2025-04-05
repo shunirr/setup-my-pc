@@ -26,6 +26,7 @@
       "proxyman",
       "shellcheck",
       "shellenv",
+      "shunirr",
       "softwareupdate",
       "tfenv",
       "unarchiver",
