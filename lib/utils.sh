@@ -189,6 +189,7 @@ install_mise() {
   if ! type mise >/dev/null 2>&1; then
     curl "https://mise.run" | sh
   fi
+  mise trust -a
 }
 
 mise_plugin_add() {

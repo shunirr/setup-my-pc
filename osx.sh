@@ -3,13 +3,9 @@ set -euo pipefail
 
 source ./lib/utils.sh
 
+IS_PERSONAL="false"
 if [ $# -eq 1 ] && [ "$1" = "p" ]; then
   IS_PERSONAL="true"
-elif [ $# -eq 1 ] && [ "$1" = "w" ]; then
-  IS_PERSONAL="false"
-else
-  echo "Invalid argument: Please set p or w"
-  exit 1
 fi
 
 add_sudoers
