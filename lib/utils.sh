@@ -100,9 +100,13 @@ mas_install() {
   fi
 }
 
+RUBY_GEMS_INSTALLED=""
 gem_install() {
   info "Installing RubyGems: $1"
-  if ! type "$1" >/dev/null 2>&1; then
+  if [ -z "$RUBY_GEMS_INSTALLED" ]; then
+    RUBY_GEMS_INSTALLED="$(gem list --local | awk '{print $1}')"
+  fi
+  if ! echo "$RUBY_GEMS_INSTALLED" | grep -q "$1"; then
     gem install "$1"
   fi
 }
