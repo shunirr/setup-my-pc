@@ -5,7 +5,7 @@ info() {
 }
 
 wait_process() {
-  info "Waiting for '$1'"
+  info "Waiting Process: $1"
   set +e
   sleep 5
   while true; do
@@ -66,19 +66,15 @@ install_homebrew() {
   fi
 }
 
-brew_update() {
-  info "Update Homebrew"
-  brew update
-}
-
 homebrew_init() {
   install_homebrew
-  brew_update
+  brew update
+  brew upgrade
 }
 
 BREW_INSTALLED=""
 brew_install() {
-  info "Installing $1"
+  info "Installing Homebrew: $1"
   if [ -z "$BREW_INSTALLED" ]; then
     BREW_INSTALLED="$(brew info --installed --json | jq '.[].full_name')"
   fi
@@ -88,14 +84,14 @@ brew_install() {
 }
 
 brew_cask_install() {
-  info "Installing $1"
+  info "Installing Cask: $1"
   if [ ! -d "$(brew --prefix)/Caskroom/$1" ]; then
     brew install --cask -f "$1"
   fi
 }
 
 mas_install() {
-  info "Installing $1"
+  info "Installing MacAppStore: $1"
   if ! mas list | grep -q "$1"; then
     mas install "$2"
   fi
@@ -105,14 +101,14 @@ mas_install() {
 }
 
 gem_install() {
-  info "Installing $1"
+  info "Installing RubyGems: $1"
   if ! type "$1" >/dev/null 2>&1; then
     gem install "$1"
   fi
 }
 
 npm_install() {
-  info "Installing $1"
+  info "Installing NPM: $1"
   if ! type "$1" >/dev/null 2>&1; then
     npm install -g "$1"
   fi
@@ -172,7 +168,7 @@ install_fenv() {
 }
 
 change_shell() {
-  info "Changing shell to $1"
+  info "Changing Shell: $1"
   if ! grep <"/etc/shells" -q "$1"; then
     echo "$1" | sudo tee -a "/etc/shells"
   fi
@@ -190,7 +186,7 @@ install_mise() {
 }
 
 mise_plugin_add() {
-  info "Adding mise plugin $1"
+  info "Adding mise plugin: $1"
   if ! mise plugin list | grep -q "$1"; then
     mise plugin add "$1"
   fi
@@ -234,4 +230,15 @@ install_xcode_by_xcodes() {
   xcodes install
   xcodes select
   sudo xcodebuild -license accept
+}
+
+VSCODE_EXTENSIONS=""
+install_vscode_extension() {
+  info "Installing VSCode Extension: $1"
+  if [ -z "$VSCODE_EXTENSIONS" ]; then
+    VSCODE_EXTENSIONS="$(code --list-extensions)"
+  fi
+  if ! echo "$VSCODE_EXTENSIONS" | grep -q "$1"; then
+    code --install-extension "$1"
+  fi
 }

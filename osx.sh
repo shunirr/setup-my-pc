@@ -115,15 +115,75 @@ mas_install 425424353 the-unarchiver
 mas_install 1352778147 bitwarden 
 mas_install 640199958 # Developer 
 
+# VSCode Extensions
+install_vscode_extension "ms-ceintl.vscode-language-pack-ja"
+
+# Markdown
+install_vscode_extension "bierner.markdown-mermaid"
+install_vscode_extension "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
+install_vscode_extension "yzhang.markdown-all-in-one"
+
+install_vscode_extension "charliermarsh.ruff"
+install_vscode_extension "chiehyu.vscode-astyle"
+install_vscode_extension "streetsidesoftware.code-spell-checker"
+
+# Flutter
+install_vscode_extension "dart-code.dart-code"
+install_vscode_extension "dart-code.flutter"
+
+# JavaScript
+install_vscode_extension "dbaeumer.vscode-eslint"
+install_vscode_extension "esbenp.prettier-vscode"
+install_vscode_extension "orta.vscode-jest"
+install_vscode_extension "svelte.svelte-vscode"
+
+# Deno
+install_vscode_extension "denoland.vscode-deno"
+
+# Git
+install_vscode_extension "eamodio.gitlens"
+install_vscode_extension "mhutchie.git-graph"
+
+install_vscode_extension "github.copilot"
+install_vscode_extension "github.copilot-chat"
+install_vscode_extension "github.vscode-github-actions"
+
+# Shell Script
+install_vscode_extension "foxundermoon.shell-format"
+install_vscode_extension "timonwong.shellcheck"
+
+# Golang
+install_vscode_extension "golang.go"
+
+# Graph
+install_vscode_extension "jebbs.plantuml"
+install_vscode_extension "tintinweb.graphviz-interactive-preview"
+
+# Android
+install_vscode_extension "mathiasfrohlich.kotlin"
+install_vscode_extension "vscjava.vscode-gradle"
+
+# Python
+install_vscode_extension "ms-python.black-formatter"
+install_vscode_extension "ms-python.debugpy"
+install_vscode_extension "ms-python.python"
+install_vscode_extension "ms-python.vscode-pylance"
+
+install_vscode_extension "hashicorp.terraform"
+
+install_vscode_extension "mechatroner.rainbow-csv"
+install_vscode_extension "ms-azuretools.vscode-docker"
+install_vscode_extension "ms-vscode-remote.remote-containers"
+install_vscode_extension "redhat.vscode-xml"
+install_vscode_extension "vscodevim.vim"
+install_vscode_extension "editorconfig.editorconfig"
+
 info "Upgrade all casks"
 brew upgrade --cask --greedy -f
 
 info "Upgrade all apps that managed MacAppStore"
 mas upgrade
 
-info "Installing from Brewfile"
-brew bundle install
-
 info "Cleanup"
 brew autoremove
-brew cleanup
+brew cleanup --prune=all
