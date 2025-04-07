@@ -93,7 +93,7 @@ brew_cask_install() {
 mas_install() {
   info "Installing MacAppStore: $1"
   if ! mas list | grep -q "$1"; then
-    mas install "$2"
+    mas install "$1"
   fi
   if [ $# -eq 2 ] && [ -d "$(brew --prefix)/Caskroom/$2" ]; then
     brew uninstall "$2"
