@@ -36,6 +36,10 @@ if [ -f "$HOME/.local/bin/mise" ]; then
   eval "$($HOME/.local/bin/mise activate bash)"
 fi
 
+# uv
+# shellcheck source=/dev/null
+source "$HOME/.local/bin/env"
+
 export LANG="ja_JP.UTF-8"
 export LC_COLLATE="ja_JP.UTF-8"
 export LC_CTYPE="ja_JP.UTF-8"
@@ -45,5 +49,5 @@ export LC_NUMERIC="ja_JP.UTF-8"
 export LC_TIME="ja_JP.UTF-8"
 export LC_ALL=
 
-# shellcheck disable=SC1091
+# shellcheck source=/dev/null
 source "$HOME/.bashrc"

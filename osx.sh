@@ -44,6 +44,9 @@ mise_plugin_add poetry
 mise_install_all
 uninstall_java8
 
+# Python
+install_uv
+
 # Ruby
 gem_install bundler
 

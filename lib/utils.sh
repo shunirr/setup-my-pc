@@ -246,3 +246,12 @@ install_vscode_extension() {
     code --install-extension "$1"
   fi
 }
+
+install_uv() {
+  info "Installing uv"
+  if [ ! -d "$HOME/.local/bin/uv" ]; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
+  # shellcheck source=/dev/null
+  source "$HOME/.local/bin/env"
+}
