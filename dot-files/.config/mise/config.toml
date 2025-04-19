@@ -1,7 +1,7 @@
 [tools]
 deno = "2.2.9"
 go = "1.24.2"
-java = "adoptopenjdk-17.0.14+7"
+java = "adoptopenjdk-17.0.15+6"
 kotlin = "2.1.20"
 node = "22.14.0"
 poetry = "2.1.2"
