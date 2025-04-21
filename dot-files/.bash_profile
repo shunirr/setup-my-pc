@@ -1,4 +1,10 @@
 # shellcheck shell=bash
+add_path() {
+  if [[ "$PATH" == *"$1"* ]]; then
+    export PATH="$PATH:$1"
+  fi
+}
+
 if [ "$(uname)" = "Darwin" ]; then
   if  [ "$(uname -m)" = "arm64" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -7,22 +13,26 @@ if [ "$(uname)" = "Darwin" ]; then
   fi
 fi
 
-export PATH="$PATH:$HOME/.docker/bin"
+add_path "$HOME/.docker/bin"
+add_path "$HOME/.local/bin"
+
 # Android SDK
 export ANDROID_SDK=$HOME/Library/Android/sdk
-export PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/platform-tools"
+add_path "$ANDROID_SDK/tools"
+add_path "$ANDROID_SDK/tools/bin"
+add_path "$ANDROID_SDK/platform-tools"
 if [ -d "$ANDROID_SDK/build-tools" ]; then
   LATEST_BUILD_TOOLS="$(find "$ANDROID_SDK/build-tools" -d -maxdepth 1 ! -name "build-tools" -print | sort -hr | head -1)"
-  export PATH="$PATH:$LATEST_BUILD_TOOLS"
+  add_path "$LATEST_BUILD_TOOLS"
 fi
 
 # Dart
-export PATH="$PATH:$HOME/.pub-cache/bin"
+add_path "$HOME/.pub-cache/bin"
 
 # FENV
 export FENV_ROOT="$HOME/.fenv"
 if [ -d "$FENV_ROOT" ]; then
-  export PATH="$FENV_ROOT/bin:$PATH"
+  add_path "$FENV_ROOT/bin"
   eval "$(fenv init -)"
 fi
 
@@ -31,14 +41,19 @@ if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   . "$(brew --prefix)/etc/bash_completion"
 fi
 
+
 # MISE
 if [ -f "$HOME/.local/bin/mise" ]; then
-  eval "$($HOME/.local/bin/mise activate bash)"
+  eval "$("$HOME"/.local/bin/mise activate bash)"
 fi
 
 # uv
-# shellcheck source=/dev/null
-source "$HOME/.local/bin/env"
+if [ -f "$HOME/.local/bin/uv" ]; then
+  eval "$(uv generate-shell-completion bash)"
+fi
+if [ -f "$HOME/.local/bin/uvx" ]; then
+  eval "$(uvx --generate-shell-completion bash)"
+fi
 
 export LANG="ja_JP.UTF-8"
 export LC_COLLATE="ja_JP.UTF-8"

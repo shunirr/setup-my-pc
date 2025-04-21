@@ -112,11 +112,12 @@ fi
 
 # Mac App Store
 brew_install mas
-mas_install 539883307 line 
-mas_install 803453959 slack 
+mas_install 539883307 line
+mas_install 803453959 slack
 mas_install 425424353 the-unarchiver
-mas_install 1352778147 bitwarden 
-mas_install 640199958 # Developer 
+mas_install 1352778147 bitwarden
+mas_install 640199958 # Developer
+
 
 # VSCode Extensions
 install_vscode_extension "ms-ceintl.vscode-language-pack-ja"

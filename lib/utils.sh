@@ -92,11 +92,11 @@ brew_cask_install() {
 
 mas_install() {
   info "Installing MacAppStore: $1"
-  if ! mas list | grep -q "$1"; then
-    mas install "$1"
-  fi
   if [ $# -eq 2 ] && [ -d "$(brew --prefix)/Caskroom/$2" ]; then
     brew uninstall "$2"
+  fi
+  if ! mas list | grep -q "$1"; then
+    mas install "$1"
   fi
 }
 
@@ -249,9 +249,11 @@ install_vscode_extension() {
 
 install_uv() {
   info "Installing uv"
-  if [ ! -d "$HOME/.local/bin/uv" ]; then
+  if [ ! -f "$HOME/.local/bin/uv" ]; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
   fi
-  # shellcheck source=/dev/null
-  source "$HOME/.local/bin/env"
+  if [ -f "$HOME/.local/bin/env" ]; then
+    # shellcheck source=/dev/null
+    source "$HOME/.local/bin/env"
+  fi
 }
