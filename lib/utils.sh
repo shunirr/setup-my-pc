@@ -249,6 +249,8 @@ install_vscode_extension() {
 
 install_uv() {
   info "Installing uv"
+  mise uninstall python --all
+  mise uninstall poetry --all
   if [ ! -f "$HOME/.local/bin/uv" ]; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
   fi
