@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 add_path() {
-  if [[ "$PATH" == *"$1"* ]]; then
+  if [[ "$PATH" != *"$1"* ]]; then
     export PATH="$PATH:$1"
   fi
 }
