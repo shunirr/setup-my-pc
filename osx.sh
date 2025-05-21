@@ -40,7 +40,6 @@ brew_install shfmt
 # mise
 uninstall_asdf
 install_mise
-mise_plugin_add poetry
 mise_install_all
 uninstall_java8
 
