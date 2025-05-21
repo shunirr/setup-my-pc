@@ -1,6 +1,6 @@
 [tools]
 deno = "2.3.3"
-go = "1.24.2"
+go = "1.24.3"
 java = "adoptopenjdk-17.0.15+6"
 kotlin = "2.1.20"
 node = "22.15.0"
