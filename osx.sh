@@ -83,7 +83,8 @@ brew_install plantuml
 brew_install awscli
 brew_install tfenv
 
-brew_cask_install karabiner-elements
+# brew_cask_install karabiner-elements
+# refs: https://qiita.com/ksakabe/items/bced8a2a735586ec2182
 brew_cask_install aquaskk
 brew_cask_install wezterm
 brew_cask_install visual-studio-code
