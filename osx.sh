@@ -108,6 +108,10 @@ if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install claude
   brew_cask_install cursor
   brew_cask_install lm-studio
+
+  # 3D
+  brew_cask_install bambu-studio
+  brew_cask_install autodesk-fusion
 fi
 
 # Mac App Store
