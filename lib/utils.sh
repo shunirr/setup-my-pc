@@ -199,6 +199,7 @@ mise_plugin_add() {
 mise_install_all() {
   info "Installing all apps by mise"
   mise install
+  mise upgrade
 }
 
 copy_dotfiles() {
