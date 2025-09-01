@@ -4,7 +4,6 @@ go = "1.24.4"
 java = "jetbrains-jre-17.0.14-b1367.22"
 kotlin = "2.1.21"
 node = "22.16.0"
-"npm:@anthropic-ai/claude-code" = "latest"
 ruby = "3.4.4"
 
 [settings]

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+    ],
+    "deny": [
+    ]
+  },
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  }
+}
