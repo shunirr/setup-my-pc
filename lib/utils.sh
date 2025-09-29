@@ -85,6 +85,17 @@ brew_install() {
 
 brew_cask_install() {
   info "Installing Cask: $1"
+  APP_DIR="$(brew info --casks "$1" --json=v2 | jq '.casks[].artifacts[] | select(has("app")) | flatten[0]' | tr -d '"' | xargs -0 basename | head -1)"
+  if [ -n "$APP_DIR" ]; then
+    if [ -d "/Applications/$APP_DIR" ] && [ "$(stat -f "%Su" "/Applications/$APP_DIR")" != "$(whoami)" ]; then
+      echo "[SUGGEST] Remove old app: $1"
+      exit 1
+    fi
+    if [ ! -d "/Applications/$APP_DIR" ]; then
+      echo "Reinstalling app: $1 to /Applications/$APP_DIR"
+      brew reinstall --cask "$1"
+    fi
+  fi
   if [ ! -d "$(brew --prefix)/Caskroom/$1" ]; then
     brew install --cask -f "$1"
   fi
