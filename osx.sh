@@ -83,6 +83,12 @@ brew_install plantuml
 brew_install awscli
 brew_install tfenv
 
+# AI
+brew_cask_install claude
+brew_cask_install cursor
+brew_cask_install lm-studio
+brew_install claude-code
+
 brew_cask_install karabiner-elements
 # refs: https://qiita.com/ksakabe/items/bced8a2a735586ec2182
 brew_cask_install aquaskk
@@ -102,12 +108,6 @@ if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install synology-drive
   mas_install 302584613 kindle
   mas_install 1475387142 tail-scale
-
-  # AI
-  brew_cask_install claude
-  brew_cask_install claude-code
-  brew_cask_install cursor
-  brew_cask_install lm-studio
 
   # 3D CAD
   brew_cask_install bambu-studio
