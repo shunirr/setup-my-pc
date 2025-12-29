@@ -100,7 +100,6 @@ brew_cask_install istat-menus
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install adobe-creative-cloud
   brew_cask_install synology-drive
-  mas_install 1037126344 # Apple Configurator
   mas_install 302584613 kindle
   mas_install 1475387142 tail-scale
 
