@@ -21,6 +21,8 @@ homebrew_init
 brew_install git
 brew_install git-lfs
 
+brew_install neovim
+
 install_hackgen
 
 brew_install ccache
@@ -85,15 +87,12 @@ brew_install tfenv
 
 # AI
 brew_cask_install claude
-brew_cask_install cursor
 brew_cask_install lm-studio
 brew_install claude-code
 
 brew_cask_install karabiner-elements
 brew_cask_install wezterm
 brew_cask_install visual-studio-code
-brew_cask_install microsoft-office
-brew_cask_install zoom
 brew_cask_install google-chrome
 brew_cask_install proxyman
 brew_cask_install rancher
@@ -112,6 +111,9 @@ if [ "$IS_PERSONAL" = 'true' ]; then
   # 3D CAD
   brew_cask_install bambu-studio
   brew_cask_install autodesk-fusion
+else
+  brew_cask_install microsoft-office
+  brew_cask_install zoom
 fi
 
 # Mac App Store
@@ -183,8 +185,10 @@ install_vscode_extension "mechatroner.rainbow-csv"
 install_vscode_extension "ms-azuretools.vscode-docker"
 install_vscode_extension "ms-vscode-remote.remote-containers"
 install_vscode_extension "redhat.vscode-xml"
-install_vscode_extension "vscodevim.vim"
 install_vscode_extension "editorconfig.editorconfig"
+
+# neovim
+install_vscode_extension "asvetliakov.vscode-neovim"
 
 info "Upgrade all casks"
 brew upgrade --cask --greedy -f
