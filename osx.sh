@@ -90,8 +90,6 @@ brew_cask_install lm-studio
 brew_install claude-code
 
 brew_cask_install karabiner-elements
-# refs: https://qiita.com/ksakabe/items/bced8a2a735586ec2182
-brew_cask_install aquaskk
 brew_cask_install wezterm
 brew_cask_install visual-studio-code
 brew_cask_install microsoft-office
@@ -102,6 +100,8 @@ brew_cask_install rancher
 brew_cask_install betterdisplay
 brew_cask_install obsidian
 brew_cask_install istat-menus
+
+brew_cask_install macskk
 
 if [ "$IS_PERSONAL" = 'true' ]; then
   brew_cask_install adobe-creative-cloud
