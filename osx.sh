@@ -101,6 +101,8 @@ brew_install tfenv
 brew_cask_install claude
 brew_cask_install lm-studio
 brew_install claude-code
+brew_install opencode
+brew_cask_install codex
 
 brew_cask_install karabiner-elements
 brew_cask_install wezterm
