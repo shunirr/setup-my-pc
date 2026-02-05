@@ -191,8 +191,8 @@ install_vscode_extension "editorconfig.editorconfig"
 # neovim
 install_vscode_extension "asvetliakov.vscode-neovim"
 
-info "Upgrade all casks"
-brew upgrade --cask --greedy -f
+info "Upgrade all casks (excluding auto-update apps)"
+brew upgrade --cask --ignore=autodesk-fusion
 
 info "Upgrade all apps that managed MacAppStore"
 mas upgrade
