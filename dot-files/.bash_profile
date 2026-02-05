@@ -54,6 +54,36 @@ if [ -d "$HOME/.lmstudio/bin" ]; then
   add_path "$HOME/.lmstudio/bin"
 fi
 
+# SSH agent (macOS Keychain integration)
+if [ -f "$HOME/.ssh/id_ed25519" ]; then
+  ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519" 2>/dev/null
+fi
+
+# fzf
+if type fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+fi
+
+# zoxide
+if type zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init bash)"
+fi
+
+# direnv
+if type direnv >/dev/null 2>&1; then
+  eval "$(direnv hook bash)"
+fi
+
+# ghq + fzf integration
+ghq-fzf() {
+  local repo
+  repo=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 \$(ghq root)/{}/README.md 2>/dev/null || ls -la \$(ghq root)/{}")
+  if [ -n "$repo" ]; then
+    cd "$(ghq root)/$repo" || return
+  fi
+}
+alias g='ghq-fzf'
+
 export LANG="ja_JP.UTF-8"
 export LC_COLLATE="ja_JP.UTF-8"
 export LC_CTYPE="ja_JP.UTF-8"

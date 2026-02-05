@@ -1,4 +1,15 @@
-.DS_store
+.DS_Store
 Thumbs.db
 doc/tags
 doc/tags-ja
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+
+# direnv
+.envrc
+.direnv/

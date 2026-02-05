@@ -263,3 +263,30 @@ install_uv() {
     source "$HOME/.local/bin/env"
   fi
 }
+
+configure_macos_defaults() {
+  info "Configuring macOS defaults"
+
+  # Keyboard: fast key repeat
+  defaults write NSGlobalDomain KeyRepeat -int 2
+  defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+  # Finder: show hidden files
+  defaults write com.apple.finder AppleShowAllFiles -bool true
+
+  # Finder: show path bar
+  defaults write com.apple.finder ShowPathbar -bool true
+
+  # Finder: show status bar
+  defaults write com.apple.finder ShowStatusBar -bool true
+
+  # Dock: auto hide
+  defaults write com.apple.dock autohide -bool true
+
+  # Dock: minimize animation
+  defaults write com.apple.dock mineffect -string "scale"
+
+  # Restart affected applications
+  killall Finder 2>/dev/null || true
+  killall Dock 2>/dev/null || true
+}

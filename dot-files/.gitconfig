@@ -2,6 +2,13 @@
   ui = auto
 [core]
   excludesfile = ~/.gitignore.global
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  line-numbers = true
+  side-by-side = true
 [alias]
   co = checkout
   st = status
@@ -9,3 +16,14 @@
   default = simple
 [init]
   defaultBranch = main
+[pull]
+  rebase = true
+[rebase]
+  autosquash = true
+[rerere]
+  enabled = true
+[diff]
+  algorithm = histogram
+  colorMoved = default
+[merge]
+  conflictstyle = zdiff3

@@ -39,6 +39,17 @@ use_bash
 brew_install shellcheck
 brew_install shfmt
 
+# Modern CLI tools
+brew_install fzf
+brew_install ripgrep
+brew_install fd
+brew_install bat
+brew_install eza
+brew_install zoxide
+brew_install git-delta
+brew_install direnv
+brew_install ghq
+
 # mise
 uninstall_asdf
 brew_install mise
@@ -196,6 +207,9 @@ brew upgrade --cask --ignore=autodesk-fusion
 
 info "Upgrade all apps that managed MacAppStore"
 mas upgrade
+
+# macOS settings
+configure_macos_defaults
 
 info "Cleanup"
 brew autoremove
