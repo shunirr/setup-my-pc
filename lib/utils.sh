@@ -192,14 +192,6 @@ change_shell() {
   fi
 }
 
-install_mise() {
-  info "Installing mise"
-  if ! type mise >/dev/null 2>&1; then
-    curl "https://mise.run" | sh
-  fi
-  mise trust -a
-}
-
 mise_plugin_add() {
   info "Adding mise plugin: $1"
   if ! mise plugin list | grep -q "$1"; then

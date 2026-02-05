@@ -41,7 +41,8 @@ brew_install shfmt
 
 # mise
 uninstall_asdf
-install_mise
+brew_install mise
+mise trust -a
 mise_install_all
 uninstall_java8
 

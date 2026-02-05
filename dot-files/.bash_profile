@@ -41,18 +41,17 @@ if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   . "$(brew --prefix)/etc/bash_completion"
 fi
 
-
-# MISE
-if [ -f "$HOME/.local/bin/mise" ]; then
-  eval "$("$HOME"/.local/bin/mise activate bash)"
-fi
-
 # uv
 if [ -f "$HOME/.local/bin/uv" ]; then
   eval "$(uv generate-shell-completion bash)"
 fi
 if [ -f "$HOME/.local/bin/uvx" ]; then
   eval "$(uvx --generate-shell-completion bash)"
+fi
+
+# LM Studio
+if [ -d "$HOME/.lmstudio/bin" ]; then
+  add_path "$HOME/.lmstudio/bin"
 fi
 
 export LANG="ja_JP.UTF-8"
