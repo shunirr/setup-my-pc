@@ -203,7 +203,11 @@ install_vscode_extension "editorconfig.editorconfig"
 install_vscode_extension "asvetliakov.vscode-neovim"
 
 info "Upgrade all casks (excluding auto-update apps)"
-brew upgrade --cask --ignore=autodesk-fusion
+EXCLUDE_CASKS="autodesk-fusion"
+OUTDATED_CASKS=$(brew outdated --cask --quiet | grep -v -E "^(${EXCLUDE_CASKS})$" || true)
+if [ -n "$OUTDATED_CASKS" ]; then
+  echo "$OUTDATED_CASKS" | xargs brew upgrade --cask
+fi
 
 info "Upgrade all apps that managed MacAppStore"
 mas upgrade
