@@ -11,7 +11,7 @@
     },
     {
       "matchUpdateTypes": ["minor"],
-      "automerge": true
+      "automerge": true,
       "stabilityDays": 30
     },
     {

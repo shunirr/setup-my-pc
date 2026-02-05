@@ -33,7 +33,7 @@ add_sudoers() {
   if [ ! -d "/etc/sudoers.d" ] || [ ! -f "/etc/sudoers.d/config" ]; then
     sudo mkdir -p "/etc/sudoers.d"
     echo '%wheel ALL=(ALL) NOPASSWD: ALL' | sudo tee "/etc/sudoers.d/config"
-    sudo chmod 440 "/etc/sudoers.d/*"
+    sudo chmod 440 /etc/sudoers.d/*
   fi
 }
 

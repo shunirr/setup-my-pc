@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: ShellCheck
-        run: shellcheck osx.sh ./lib/utils.sh ./dot-files/.bashrc
+        run: shellcheck osx.sh ./lib/utils.sh ./install.sh ./dot-files/.bashrc
