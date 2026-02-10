@@ -74,6 +74,9 @@ if type direnv >/dev/null 2>&1; then
   eval "$(direnv hook bash)"
 fi
 
+# mise
+eval "$(mise activate bash)"
+
 # ghq + fzf integration
 ghq-fzf() {
   local repo

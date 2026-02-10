@@ -29,6 +29,5 @@ fi
 
 if type rg >/dev/null 2>&1; then
   alias grep="rg"
+  alias ag="rg"
 fi
-
-alias claude-glm="CLAUDE_CONFIG_DIR=\"$HOME/.claude_glm\" claude"
