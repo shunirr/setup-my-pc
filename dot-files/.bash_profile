@@ -96,5 +96,10 @@ export LC_NUMERIC="ja_JP.UTF-8"
 export LC_TIME="ja_JP.UTF-8"
 export LC_ALL=
 
+if [ -f "$HOME/.bash_profile.private" ]; then
+  # shellcheck source=/dev/null
+  source "$HOME/.bash_profile.private"
+fi
+
 # shellcheck source=/dev/null
 source "$HOME/.bashrc"
