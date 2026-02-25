@@ -19,15 +19,15 @@ else
   alias la="ls -laF -G"
 fi
 
-if type bat >/dev/null 2>&1; then
-  alias cat="bat --paging=never"
-fi
-
-if type fd >/dev/null 2>&1; then
-  alias find="fd"
-fi
-
-if type rg >/dev/null 2>&1; then
-  alias grep="rg"
-  alias ag="rg"
-fi
+# if type bat >/dev/null 2>&1; then
+#   alias cat="bat --paging=never"
+# fi
+# 
+# if type fd >/dev/null 2>&1; then
+#   alias find="fd"
+# fi
+# 
+# if type rg >/dev/null 2>&1; then
+#   alias grep="rg"
+#   alias ag="rg"
+# fi
