@@ -102,8 +102,10 @@ brew_cask_install claude
 brew_cask_install lm-studio
 brew_cask_install codex
 brew_install claude-code
-brew_install opencode
 brew install gemini-cli
+brew install copilot-cli
+
+brew_cask_install cmux
 
 brew_cask_install karabiner-elements
 brew_cask_install wezterm
