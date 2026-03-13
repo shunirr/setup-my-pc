@@ -1,0 +1,18 @@
+font-family = HackGen35 Console NF
+font-style = Bold
+font-size = 13
+
+# Disable ligatures
+font-feature = -liga
+font-feature = -calt
+font-feature = -dlig
+
+theme = One Dark
+
+scrollback-limit = 50000
+
+unfocused-split-opacity = 0.85
+split-divider-color = #3e4451
+
+# Option+¥ to send backslash (migrated from wezterm)
+keybind = opt+¥=text:\\
