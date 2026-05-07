@@ -11,6 +11,7 @@ if [ "$(uname)" = "Darwin" ]; then
   else
     eval "$(/usr/local/bin/brew shellenv)"
   fi
+  export HOMEBREW_NO_AUTO_UPDATE=1
 fi
 
 add_path "$HOME/.docker/bin"
