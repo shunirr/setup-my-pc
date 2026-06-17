@@ -102,7 +102,7 @@ brew_cask_install claude
 brew_cask_install lm-studio
 brew_cask_install codex
 brew_install claude-code
-brew install gemini-cli
+# brew install gemini-cli
 
 brew_cask_install cmux
 
