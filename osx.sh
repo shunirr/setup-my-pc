@@ -115,6 +115,7 @@ brew_cask_install rancher
 brew_cask_install betterdisplay
 brew_cask_install obsidian
 brew_cask_install istat-menus
+brew_cask_install zed
 
 brew_cask_install macskk
 
