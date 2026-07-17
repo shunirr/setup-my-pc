@@ -2,7 +2,7 @@
 bun = "1.2.21"
 deno = "2.3.5"
 go = "1.24.4"
-java = "jetbrains-jre-17.0.14-b1367.22"
+java = "temurin-17.0.19+10"
 kotlin = "2.1.21"
 node = "24.16.0"
 ruby = "3.4.4"
